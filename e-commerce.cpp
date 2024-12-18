@@ -8,12 +8,14 @@ using namespace std;
 
 struct Node
 {
-    Node* next;
+    Node* left;
+    Node* right;
     string name;
     int id;
     string gender;
     int amount;
     int age;
+    int money;
 
 };
 class Customer_queue
