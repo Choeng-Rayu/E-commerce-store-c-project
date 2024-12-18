@@ -6,10 +6,15 @@ using namespace std;
 #define FILE_INVOICE "Invoice data.csv"
 #define FILE_PRODUCT "product data.csv"
 
+//Note read file for ELITE 
+//customer for bro vath
+//me tver CRUD
+
 struct Node
 {
     Node* left;
     Node* right;
+    Node* next;
     string name;
     int id;
     string gender;
@@ -39,14 +44,11 @@ class Seller
     int amount_product; //
     Node* head;
     Node* tail;
-    Seller()
-    {
+    Seller(){
         head = NULL;
         tail = NULL;
         amount_product = 0;
     }
-
-
 };
 
 int main ()
