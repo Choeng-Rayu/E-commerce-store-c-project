@@ -391,6 +391,7 @@ class SellerLogin
 };
 
 class Style{
+    public:
     void display_menu()
     {
         cout << "\n                   \t\t***************************************************************\n";
@@ -513,6 +514,10 @@ class Style{
 
 int main ()
 {
-
+    CustomerLogin log;
+    Style style;
+    style.loading();
+    log.lock_reset_pw();
+    cout << "done!" << endl;
     return 0;
 }
