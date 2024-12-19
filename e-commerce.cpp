@@ -16,14 +16,25 @@ struct Node
     Node* left;
     Node* right;
     Node* next;
-    string name;
-    string gender;
-    int id;
+    // PRODUCT 
+    string nameProduct;
+    int idPoduct;
+    int priceProduct;
     int amount;
-    int age;
+    // SELLER
     int money;
-
+    string cusomterName;
+    string gender;
+    int 
 };
+
+struct Date
+{
+    int year;
+    int month;
+    int days;
+};
+
 
 
 class Customer_queue
@@ -59,7 +70,7 @@ class AddToCard
     int totalProduct;
     AddToCard(){
         top = NULL;
-        
+
     }
 
 };
