@@ -6,6 +6,9 @@ using namespace std;
 #define FILE_INVOICE "Invoice data.csv"
 #define FILE_PRODUCT "product data.csv"
 #define FILE_PERSONAL "personal customer.csv"
+#define FILE_USER_LOGIN "user login.csv"
+#define FILE_SELLER_LOGIN "seller login.csv"
+
 
 //Note read file for ELITE 
 //customer for bro vath
@@ -21,11 +24,21 @@ struct Node
     int idPoduct;
     int priceProduct;
     int amount;
-    // SELLER
+    string typeProduct;
+    // customer
     int money;
     string cusomterName;
     string gender;
-    int 
+    int age;
+    string email;
+    string phoneCustomer;
+};
+struct Login
+{
+    string usernameCustomer;
+    string pwCustomer;
+    string usernameSeller;
+    string pwseller;
 };
 
 struct Date
