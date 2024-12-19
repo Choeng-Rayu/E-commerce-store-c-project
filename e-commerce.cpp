@@ -5,6 +5,7 @@ using namespace std;
 #define FILE_HISTORY "history data.csv"
 #define FILE_INVOICE "Invoice data.csv"
 #define FILE_PRODUCT "product data.csv"
+#define FILE_PERSONAL "personal customer.csv"
 
 //Note read file for ELITE 
 //customer for bro vath
@@ -16,24 +17,26 @@ struct Node
     Node* right;
     Node* next;
     string name;
-    int id;
     string gender;
+    int id;
     int amount;
     int age;
     int money;
 
 };
+
+
 class Customer_queue
 {
     int amount_customer; //size
     Node* front;
-    Node* reare;
+    Node* rear;
 public:
     Customer_queue()
     {
         amount_customer = 0;
         front = NULL;
-        reare = NULL;
+        rear = NULL;
     }
 
 
@@ -49,6 +52,16 @@ class Seller
         tail = NULL;
         amount_product = 0;
     }
+};
+class AddToCard
+{
+    Node* top;
+    int totalProduct;
+    AddToCard(){
+        top = NULL;
+        
+    }
+
 };
 
 int main ()
