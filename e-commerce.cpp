@@ -56,22 +56,48 @@ struct Date
     int days;
 };
 
-
-
-class Customer_queue
+class Customer
 {
     int amount_customer; //size
     Node* front;
     Node* rear;
 public:
-    Customer_queue()
+    Customer()
     {
         amount_customer = 0;
         front = NULL;
         rear = NULL;
     }
+    void buy_product(int price, string nameOFProduct, int amount, int dateOFbuying){
+
+    }
 
 
+};
+
+class NST //search function
+{
+    Node* root;
+    int total;
+    NST(){
+        root = NULL;
+        total = 0;
+    }
+    void search_product_by_name(){
+
+    }
+    void search_product_by_type(){
+
+    }
+    void search_product_by_price(){
+
+    }
+    void search_product_by_id(){
+
+    }
+    void search_product_by_amount(){
+        
+    }
 };
 
 class File_handling
