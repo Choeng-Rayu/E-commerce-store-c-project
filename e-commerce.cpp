@@ -52,9 +52,9 @@ struct Login
     string usernameCustomer;
     string pwCustomer;
     string emailCustomer;
-    string usernameSeller;
+    string usernameseller;
     string pwseller;
-    string emailSeller;
+    string emailseller;
 };
 
 class Customer
@@ -150,17 +150,18 @@ class File_handling
             cout << "can't not read file or file error!" << endl;
             return;
         }
-        file_seller >> read.usernameSeller >> read.emailSeller >> read.pwseller;
-        file_seller.close();
+        file_seller >> read.usernameseller >> read.emailseller >> read.pwseller;
+        cout << read.usernameseller << " " << read.emailseller << " " << read.pwseller;
+        file_seller.close(); 
     }
     void writeFile_seller_login(){
         fstream file_seller(FILE_SELLER_LOGIN, ios::out);
         Login write;
-        file_seller << write.usernameSeller << endl;
-        file_seller << write.emailSeller << endl;
-        file_seller << write.pwseller << endl;
+        file_seller << write.usernameseller << endl;
+        file_seller << write.emailseller << endl;
+        file_seller << write.pwseller;
+        cout << "your data is successfully saved" << endl;
         file_seller.close();
-
     }
 
     void readFile_user_login(){
@@ -172,11 +173,13 @@ class File_handling
             return;
         }
         file_user >> read.usernameCustomer >> read.emailCustomer >> read.pwCustomer;
+        cout << read.usernameCustomer << " " << read.emailCustomer << " " << read.pwCustomer;
         file_user.close();
     }
     void writeFile_user_login(){
         fstream file_user(FILE_USER_LOGIN, ios::out);
         Login write;
+        cout << write.usernameCustomer << " " << write.emailCustomer << " " << write.pwCustomer << "ot mean " << endl ;
         file_user << write.usernameCustomer << endl;
         file_user << write.emailCustomer << endl;
         file_user << write.pwCustomer << endl; 
@@ -288,8 +291,8 @@ class CustomerLogin
         cout << "Enter new password: ";
         cin.ignore();
         getline(cin, customer.pwCustomer);
+        cout << customer.usernameCustomer << " " << customer.emailCustomer << " " << customer.pwCustomer << "mean ot" << endl;
         file_user.writeFile_user_login();
-        system("cls");
 
     }
 
@@ -389,11 +392,164 @@ class CustomerLogin
 class SellerLogin
 {
     Login seller;
+    File_handling file_user;
+    public: 
+    void lock_program()
+    {
+        string user_input_password;
+        string user_name_input;
+        string user_email_input;
+        int found = 0;
+        bool correct = false;
+        file_user.readFile_user_login();
+        system("color c");
+        for (int j = 0; j < 4; j++)
+        {
+            found ++;
+            if ( found == 4)
+            {
+                cout << "Access denied. Program will terminate.\n";
+                exit(1); // Terminates the program if password is incorrect three times
+            }
+            cout << "Please enter seller name: ";
+        // cin >> user_name_input;
+            cin.ignore();
+            getline(cin, user_name_input);
+
+            cout << "Please enter email: ";
+            cin >> user_email_input;
+            cout << "Please enter password: ";
+            cin >> user_input_password;
+            if ( user_name_input == seller.usernameseller  && user_input_password == seller.pwseller && user_email_input == seller.emailseller )
+            {
+                correct = true;
+                system("cls");
+                //cout << "Access granted!\n";
+                break;
+            }
+            if ( !correct )
+            {
+                system("cls");
+                cout << "Invalid  user name or password!\n";
+            }
+        }
+    }
+
+    void reset_pw()
+    {
+        system ("color d");
+        cout << "Enter new user name: ";
+        cin.ignore();
+        getline(cin, seller.usernameseller);
+        cout << "Enter new email: ";
+        cin >> seller.emailseller;
+        cout << "Enter new password: ";
+        cin.ignore();
+        getline(cin, seller.pwseller);
+        file_user.writeFile_user_login();
+        system("cls");
+
+    }
+
+    void lock_reset_pw ()
+    {
+        int num;
+        char login_choice;
+        char letter;
+
+        system ("color B");
+        cout << "\n                   \t\t***************************************************************\n";
+        cout << "                   \t\t************** Welcome to E-Commerce store *********************\n";
+        cout << "                   \t\t***************************************************************\n\n";
+        cout << " Press Enter to continue...";
+        fflush (stdin);
+        cin.ignore();
+        system("cls");
+        system ("color 3");
+        cout << "Note" << endl;
+        cout << "W. For Enter user name and password" << endl;
+        cout << "F. For forget password" << endl;
+        cout << "Please your choice: ";
+        cin >> login_choice;
+
+        system ("cls");
+        switch ( login_choice )
+        {
+            //choice_convert = atoi (password_choice);
+            case 'W':
+            case 'w':
+                lock_program();
+                break;
+
+            case 'F':
+            case 'f':
+                //int num;
+                system ("color 4");
+                cout << "Question 1: what number did you like?" << endl;
+                cout << "Answer here: ";
+                cin >> num;
+                system ("cls");
+                switch( num )
+                {
+                case 1:
+                    system ("color 5");
+                    cout << "Question 2: Which letter you like the most?" << endl;
+                    cout << "Answer here: ";
+                    cin >> letter;
+                    system ("cls");
+                    switch( letter )
+                    {
+
+                        case 'z':
+                        {
+                            system ("color 6");
+                            float x1,x2;
+                            cout << "The last question" << endl;
+                            cout << "solve this equation: 2X^2 - 5X + 3 = 0" << endl;
+                            cout << "Answer here:" << endl;
+                            cout << "X1 = ";
+                            cin >> x1;
+                            cout << "X2 = ";
+                            cin >> x2;
+                            system ("cls");
+                            if ( (x1 == 1 && x2 == 1.5) || (x2 == 1 && x1 == 1.5 ))
+                            {
+                                system ("color 7");
+                                cout << "You are correct!" << endl;
+                                reset_pw();
+                            }
+                            else
+                            {
+                                system ("color 7");
+                                cout << "You were wrong!" << endl;
+                                exit (1);
+                            }
+                        }
+                            break;
+                        default:
+                            cout << "You're wrong!" <<endl;
+                            exit(1); //end the program
+                    }
+
+                    break;
+                default:
+                    cout << "You're wrong!" <<endl;
+                    exit(1); //end the program
+                }
+                break;
+            default:
+                cout << "Invalid input" << endl;
+                exit(1);
+        }
+    }
+    
 
 };
 
 class Style{
     public:
+    CustomerLogin customer;
+    SellerLogin seller;
     void display_menu()
     {
         cout << "\n                   \t\t***************************************************************\n";
@@ -508,18 +664,46 @@ class Style{
         cout << "\n\n\t\t\t\tData saved successfully!\n";
 
     }
-
-
+    void seller_customer()
+    {
+        char opt;
+        cout << "please choose option(only one letter): " << endl;
+        cout << "C. for Customer" << endl;
+        cout << "S. for Seller" << endl;
+        cout << "Enter your role: ";
+        cin >> opt;
+        switch (opt)
+        {
+        case 'c':
+        case 'C': 
+        system("cls");
+            customer.lock_reset_pw();
+            break;
+        case 'S':
+        case 's':
+            seller.lock_reset_pw();
+            break;
+        default:
+        cout << "invalid input" << endl;
+            break;
+        }
+    }
 
 };
 
 
+
 int main ()
 {
-    CustomerLogin log;
     Style style;
+    File_handling file;
+    CustomerLogin c;
+    Login l;
+    cout << l.usernameCustomer << " " << l.emailCustomer << " " << l.pwCustomer << "???????" << endl;
+    c. reset_pw();
+    file.writeFile_user_login();
+    style.seller_customer();
     style.loading();
-    log.lock_reset_pw();
     cout << "done!" << endl;
     return 0;
 }
