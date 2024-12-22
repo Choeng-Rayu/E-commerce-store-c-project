@@ -98,6 +98,7 @@ class date_handling
         date.month = 1 + ltm->tm_mon;
         date.days = ltm->tm_mday;
     }
+    
 };
 
 class Admine
@@ -192,11 +193,7 @@ public:
         Node* delete_customer;
         Node* current = head;
         Node* previous = nullptr;
-        
 
-
-
-        
     }
 };
 
