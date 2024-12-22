@@ -190,7 +190,9 @@ public:
         cin.ignore();
         getline(cin, password);
         Node* delete_customer;
-        delete_customer = head;
+        Node* current = head;
+        Node* previous = nullptr;
+        
 
 
 
