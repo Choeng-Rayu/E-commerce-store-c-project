@@ -4,76 +4,256 @@
 #include<string>
 #include<iomanip>
 #include<windows.h>
+#include<ctime>
 
 using namespace std;
 
-#define FILE_HISTORY "history data.csv"
-#define FILE_INVOICE "Invoice data.csv"
-#define FILE_PRODUCT "product data.csv"
-#define FILE_PERSONAL "personal customer.csv"
-#define FILE_USER_LOGIN "user login.csv"
-#define FILE_SELLER_LOGIN "seller login.csv"
-#define FILE_Add_TO_CART "add to cart.csv"
+#define FILE_HISTORY "history data.csv" // store all the history of the customer
+#define FILE_INVOICE "Invoice data.csv" // store all the invoice of the customer
+#define FILE_PRODUCT "product data.csv" // store all the product
+#define FILE_PERSONAL "personal customer.csv" // store all the personal information of the customer
+#define FILE_USER_LOGIN "user login.csv" // store all the login information of the customer
+#define FILE_SELLER_LOGIN "seller login.csv" // store all the login information of the seller
+#define FILE_Add_TO_CART "add to cart.csv" // store all the product that the customer add to cart
+#define FILE_BUY_NOW "buy now.csv" // store all the product that the customer buy now
+#define FILE_PERSONAL_SELLER "personal seller.csv" // store all the personal information of the seller
 
-
-//Note read file for ELITE 
-//customer for bro vath
-//me tver CRUD
 
 struct Node
 {
     Node* left;
     Node* right;
     Node* next;
+
     // PRODUCT 
     string nameProduct;
     int idPoduct;
     int priceProduct;
     int amount;
     string typeProduct;
+
     // customer
-    int money;
     string cusomterName;
     string gender;
     int age;
     string email;
     string phoneCustomer;
-};
-
-struct Date
-{
-    int year;
-    int month;
-    int days;
-};
-
-struct Login
-{
+    int money;
+    
+    //seller
     string usernameCustomer;
     string pwCustomer;
     string emailCustomer;
     string usernameseller;
     string pwseller;
     string emailseller;
+
+    //date
+    struct Date
+    {
+        int year;
+        int month;
+        int days;
+    };
 };
 
-class Customer
+
+
+class date_handling
 {
-    int amount_customer; //size
-    Node* front;
-    Node* rear;
-public:
-    Customer()
+    Node::Date date;
+    public:
+    void get_date(){
+        time_t now = time(0);
+        tm* ltm = localtime(&now);
+        date.year = 1900 + ltm->tm_year;
+        date.month = 1 + ltm->tm_mon;
+        date.days = ltm->tm_mday;
+    }
+    void display_date(){
+        cout << "Date: " << date.days << "/" << date.month << "/" << date.year << endl;
+    }
+};
+
+class Customer_account
+{
+    int total_customer;
+    Node* head;
+    Node* tail;
+    public:
+    Customer_account(){
+        total_customer = 0;
+        head = NULL;
+        tail = NULL;
+    }
+    void add_customer(string name, string email, string phone, int money){
+        Node* newCustomer = new Node;
+        newCustomer->cusomterName = name;
+        newCustomer->email = email;
+        newCustomer->phoneCustomer = phone;
+        newCustomer->money = money;
+        if (total_customer == 0)
+        {
+            head = tail = newCustomer;
+        }
+        else
+        {
+            tail->next = newCustomer;
+            tail = newCustomer;
+        }
+        total_customer++;
+    }
+    void delete_customer(int position)
     {
-        amount_customer = 0;
-        front = NULL;
-        rear = NULL;
+        if (position < 0 || position >= total_customer)
+        {
+            cout << "Invalid position." << endl;
+            return;
+        }
+        Node* toDelete;
+        string removedName;
+        if (position == 0)
+        {
+            toDelete = head;
+            head = head->next;
+            removedName = toDelete->cusomterName;
+        }
+        else
+        {
+            Node* current = head;
+            for (int i = 1; i < position; i++)
+            {
+                current = current->next;
+            }
+            toDelete = current->next;
+            current->next = toDelete->next;
+            removedName = toDelete->cusomterName;
+            if (position == total_customer - 1) tail = current;
+        }
+        delete toDelete;
+        total_customer--;
+        cout << "Customer " << removedName << " deleted successfully." << endl;
     }
-    void buy_product(int price, string nameOFProduct, int amount, int dateOFbuying){
-
+    void load_customer(){
+        fstream file_customer(FILE_PERSONAL, ios::in);
+        if (!file_customer)
+        {
+            cout << "Unable to open file for loading." << endl;
+            return;
+        }
+        string name, email, phone;
+        int money;
+        while (file_customer >> name >> email >> phone >> money)
+        {
+            add_customer(name, email, phone, money);
+        }
+        file_customer.close();
     }
-
-
+    void save_customer(){
+        fstream file_customer(FILE_PERSONAL, ios::out);
+        if (!file_customer)
+        {
+            cout << "Unable to open file for saving." << endl;
+            return;
+        }
+        Node* current = head;
+        while (current)
+        {
+            file_customer << current->cusomterName << "\t" << current->email << "\t" << current->phoneCustomer << "\t" << current->money << endl;
+            current = current->next;
+        }
+        file_customer.close();
+        cout << "Data saved to file successfully." << endl;
+    }
+    void update_account_customer(int position, int money){
+        if (position < 0 || position >= total_customer)
+        {
+            cout << "Invalid position." << endl;
+            return;
+        }
+        Node* current = head;
+        for (int i = 0; i < position; i++)
+        {
+            current = current->next;
+        }
+        current->money = money;
+        cout << "Account updated successfully." << endl;
+    }
+};
+class Product
+{
+    int size;
+    Node* head;
+    Node* tail;
+    public:
+    Product(){
+        size = 0;
+        head = NULL;
+        tail = NULL;
+    }
+    void add_product(string name, int id, int price, int amount, string type){
+        Node* newProduct = new Node;
+        newProduct->nameProduct = name;
+        newProduct->idPoduct = id;
+        newProduct->priceProduct = price;
+        newProduct->amount = amount;
+        newProduct->typeProduct = type;
+        if (size == 0)
+        {
+            head = tail = newProduct;
+        }
+        else
+        {
+            tail->next = newProduct;
+            tail = newProduct;
+        }
+        size++;
+    }
+    void display_product(){
+        if (size == 0)
+        {
+            cout << "No product available." << endl;
+            return;
+        }
+        Node* current = head;
+        while (current)
+        {
+            cout << current->nameProduct << "\t" << current->idPoduct << "\t" << current->priceProduct << "\t"
+                 << current->amount << "\t" << current->typeProduct << endl;
+            current = current->next;
+        }
+    }
+    void delete_product(int position)
+    {
+        if (position < 0 || position >= size)
+        {
+            cout << "Invalid position." << endl;
+            return;
+        }
+        Node* toDelete;
+        string removedName;
+        if (position == 0)
+        {
+            toDelete = head;
+            head = head->next;
+            removedName = toDelete->nameProduct;
+        }
+        else
+        {
+            Node* current = head;
+            for (int i = 1; i < position; i++)
+            {
+                current = current->next;
+            }
+            toDelete = current->next;
+            current->next = toDelete->next;
+            removedName = toDelete->nameProduct;
+            if (position == size - 1) tail = current;
+        }
+        delete toDelete;
+        size--;
+        cout << "Product " << removedName << " deleted successfully." << endl;
+    }
 };
 
 class NST //search function
@@ -85,25 +265,29 @@ class NST //search function
         root = NULL;
         total = 0;
     }
-    void search_product_by_name(){
-
+    void insert(int id){
+        root = insert_(root, id);
     }
-    void search_product_by_type(){
-
+    void insert(int id){
+        root = insert_(root, id);
     }
-    void search_product_by_price(){
-
-    }
-    void search_product_by_id(){
-
-    }
-    void search_product_by_amount(){
-        
+    void readFile(){
+        fstream file(FILE_PRODUCT, ios::in);
+        if (!file) {
+            cerr << "Error: Unable to open file " << FILE_PRODUCT << endl;
+            return;
+        }
+        int readIDFile;
+        while (file >> readIDFile) {
+            root = insert_(root, readIDFile);
+        }
     }
 };
 
 class File_handling
 {
+    Node read;
+    Node write;
     public:
     void readFile_history(){
         fstream file_history(FILE_HISTORY, ios::in);
@@ -143,7 +327,6 @@ class File_handling
     }
 
     void readFile_seller_login(){
-        Login read;
         fstream file_seller(FILE_SELLER_LOGIN, ios::in);
         //code here
         if(!file_seller) {
@@ -154,18 +337,17 @@ class File_handling
         cout << read.usernameseller << " " << read.emailseller << " " << read.pwseller;
         file_seller.close(); 
     }
-    void writeFile_seller_login(){
+    void writeFile_seller_login(string name, string email, string pw){
         fstream file_seller(FILE_SELLER_LOGIN, ios::out);
-        Login write;
-        file_seller << write.usernameseller << endl;
-        file_seller << write.emailseller << endl;
-        file_seller << write.pwseller;
+        file_seller << name << endl;
+        file_seller << email << endl;
+        file_seller << pw << endl; 
         cout << "your data is successfully saved" << endl;
         file_seller.close();
+        Sleep (100);
     }
 
     void readFile_user_login(){
-        Login read;
         fstream file_user(FILE_USER_LOGIN, ios::in);
         //code here
         if(!file_user) {
@@ -173,16 +355,14 @@ class File_handling
             return;
         }
         file_user >> read.usernameCustomer >> read.emailCustomer >> read.pwCustomer;
-        cout << read.usernameCustomer << " " << read.emailCustomer << " " << read.pwCustomer;
+        cout << "data in read file function" << read.usernameCustomer << " " << read.emailCustomer << " " << read.pwCustomer  << endl;
         file_user.close();
     }
-    void writeFile_user_login(){
+    void writeFile_user_login(string name, string email, string pw){
         fstream file_user(FILE_USER_LOGIN, ios::out);
-        Login write;
-        cout << write.usernameCustomer << " " << write.emailCustomer << " " << write.pwCustomer << "ot mean " << endl ;
-        file_user << write.usernameCustomer << endl;
-        file_user << write.emailCustomer << endl;
-        file_user << write.pwCustomer << endl; 
+        file_user << name << endl;
+        file_user << email << endl;
+        file_user << pw << endl; 
         cout << "your data is successfully saved" << endl;
         file_user.close();
         Sleep (100);
@@ -197,20 +377,35 @@ class File_handling
         fstream file_add_to_cart(FILE_Add_TO_CART, ios::out);
 
     }
-
-
 };
 
-class Seller
+class seller_account
 {
-    int amount_product; //
+    int amount_seller; //
     Node* head;
     Node* tail;
-    Seller(){
+    seller_account(){
         head = NULL;
         tail = NULL;
-        amount_product = 0;
+        amount_seller = 0;
     }
+    void new_seller_account(string name_seller, string email_seller, string pw_seller){
+        Node* newSeller = new Node;
+        newSeller->cusomterName = name_seller;
+        newSeller->email = email_seller;
+        newSeller->pwseller = pw_seller;
+        if (amount_seller == 0)
+        {
+            head = tail = newSeller;
+        }
+        else
+        {
+            tail->next = newSeller;
+            tail = newSeller;
+        }
+        amount_seller++;
+    }
+
 };
 class CRUD
 {
@@ -222,6 +417,103 @@ class CRUD
         tail = NULL;
         quantity = 0;
     }
+    void add_product(string name, int id, int price, int amount, string type){
+        Node* newProduct = new Node;
+        newProduct->nameProduct = name;
+        newProduct->idPoduct = id;
+        newProduct->priceProduct = price;
+        newProduct->amount = amount;
+        newProduct->typeProduct = type;
+        if (quantity == 0)
+        {
+            head = tail = newProduct;
+        }
+        else
+        {
+            tail->next = newProduct;
+            tail = newProduct;
+        }
+        quantity++;
+    }
+    void delete_product(int position)
+    {
+        if (position < 0 || position >= quantity)
+        {
+            cout << "Invalid position." << endl;
+            return;
+        }
+        Node* toDelete;
+        string removedName;
+        if (position == 0)
+        {
+            toDelete = head;
+            head = head->next;
+            removedName = toDelete->nameProduct;
+        }
+        else
+        {
+            Node* current = head;
+            for (int i = 1; i < position; i++)
+            {
+                current = current->next;
+            }
+            toDelete = current->next;
+            current->next = toDelete->next;
+            removedName = toDelete->nameProduct;
+            if (position == quantity - 1) tail = current;
+        }
+        delete toDelete;
+        quantity--;
+        cout << "Product " << removedName << " deleted successfully." << endl;
+    }
+    void update_product(int position, string name, int id, int price, int amount, string type){
+        if (position < 0 || position >= quantity)
+        {
+            cout << "Invalid position." << endl;
+            return;
+        }
+        Node* current = head;
+        for (int i = 0; i < position; i++)
+        {
+            current = current->next;
+        }
+        current->nameProduct = name;
+        current->idPoduct = id;
+        current->priceProduct = price;
+        current->amount = amount;
+        current->typeProduct = type;
+        cout << "Product " << name << " updated successfully." << endl;
+    }
+    void load_from_file(){
+        ifstream file(FILE_PRODUCT);
+        if (!file.is_open()) return;
+        string name, type;
+        int id, price, amount;
+        while (getline(file, name, ','))
+        {
+            file >> id >> price >> amount;
+            file.ignore();
+            getline(file, type);
+            add_product(name, id, price, amount, type);
+        }
+        file.close();
+    }
+    void save_to_file(){
+        fstream file(FILE_PRODUCT, ios::out);
+        if (!file.is_open()) return;
+        Node* current = head;
+        while (current)
+        {
+            file << current->nameProduct << ","
+                 << current->idPoduct << ","
+                 << current->priceProduct << ","
+                 << current->amount << ","
+                 << current->typeProduct << endl;
+            current = current->next;
+        }
+        file.close();
+    }
+
 };
 class AddToCart
 {
@@ -229,9 +521,139 @@ class AddToCart
     int totalProduct;
     AddToCart(){
         top = NULL;
-
+        totalProduct = 0;
     }
-
+    void add_product_to_cart(string name, int id, int price, int amount, string type){
+        Node* newProduct = new Node;
+        newProduct->nameProduct = name;
+        newProduct->idPoduct = id;
+        newProduct->priceProduct = price;
+        newProduct->amount = amount;
+        newProduct->typeProduct = type;
+        if (totalProduct == 0)
+        {
+            top = newProduct;
+        }
+        else
+        {
+            newProduct->next = top;
+            top = newProduct;
+        }
+        totalProduct++;
+    }
+    void delete_product_from_cart(){
+        if (totalProduct == 0)
+        {
+            cout << "No product in cart." << endl;
+            return;
+        }
+        Node* toDelete = top;
+        top = top->next;
+        delete toDelete;
+        totalProduct--;
+        cout << "Product deleted from cart successfully." << endl;
+    }
+    void display_product_in_cart(){
+        if (totalProduct == 0)
+        {
+            cout << "No product in cart." << endl;
+            return;
+        }
+        Node* current = top;
+        while (current)
+        {
+            cout << current->nameProduct << "\t" << current->idPoduct << "\t" << current->priceProduct << "\t"
+                 << current->amount << "\t" << current->typeProduct << endl;
+            current = current->next;
+        }
+    }
+    void update_product_in_cart(int position, string name, int id, int price, int amount, string type){
+        if (position < 0 || position >= totalProduct)
+        {
+            cout << "Invalid position." << endl;
+            return;
+        }
+        Node* current = top;
+        for (int i = 0; i < position; i++)
+        {
+            current = current->next;
+        }
+        current->nameProduct = name;
+        current->idPoduct = id;
+        current->priceProduct = price;
+        current->amount = amount;
+        current->typeProduct = type;
+        cout << "Product " << name << " updated successfully." << endl;
+    }
+    void checkout(){
+        if (totalProduct == 0)
+        {
+            cout << "No product in cart." << endl;
+            return;
+        }
+        Node* current = top;
+        while (current)
+        {
+            cout << current->nameProduct << "\t" << current->idPoduct << "\t" << current->priceProduct << "\t"
+                 << current->amount << "\t" << current->typeProduct << endl;
+            current = current->next;
+        }
+        cout << "Total product: " << totalProduct << endl;
+        cout << "Checkout successfully." << endl;
+    }
+    void clear_cart(){
+        while (top)
+        {
+            Node* toDelete = top;
+            top = top->next;
+            delete toDelete;
+        }
+        totalProduct = 0;
+        cout << "Cart cleared successfully." << endl;
+    }
+    void save_to_file(){
+        fstream file(FILE_Add_TO_CART, ios::out);
+        if (!file.is_open()) return;
+        Node* current = top;
+        while (current)
+        {
+            file << current->nameProduct << ","
+                 << current->idPoduct << ","
+                 << current->priceProduct << ","
+                 << current->amount << ","
+                 << current->typeProduct << endl;
+            current = current->next;
+        }
+        file.close();
+    }
+    void load_from_file(){
+        ifstream file(FILE_Add_TO_CART);
+        if (!file.is_open()) return;
+        string name, type;
+        int id, price, amount;
+        while (getline(file, name, ','))
+        {
+            file >> id >> price >> amount;
+            file.ignore();
+            getline(file, type);
+            add_product_to_cart(name, id, price, amount, type);
+        }
+        file.close();
+    }
+    void display_cart(){
+        if (totalProduct == 0)
+        {
+            cout << "No product in cart." << endl;
+            return;
+        }
+        Node* current = top;
+        while (current)
+        {
+            cout << current->nameProduct << "\t" << current->idPoduct << "\t" << current->priceProduct << "\t"
+                 << current->amount << "\t" << current->typeProduct << endl;
+            current = current->next;
+        }
+    }
 };
 
 class CustomerLogin
@@ -244,6 +666,7 @@ class CustomerLogin
         string user_input_password;
         string user_name_input;
         string user_email_input;
+        cout << "data in lock program" << customer.usernameCustomer << " " << customer.emailCustomer << " " << customer.pwCustomer  << endl;
         int found = 0;
         bool correct = false;
         file_user.readFile_user_login();
@@ -256,7 +679,7 @@ class CustomerLogin
                 cout << "Access denied. Program will terminate.\n";
                 exit(1); // Terminates the program if password is incorrect three times
             }
-            cout << "Please enter seller name: ";
+            cout << "Please enter customer name: ";
         // cin >> user_name_input;
             cin.ignore();
             getline(cin, user_name_input);
@@ -291,8 +714,7 @@ class CustomerLogin
         cout << "Enter new password: ";
         cin.ignore();
         getline(cin, customer.pwCustomer);
-        cout << customer.usernameCustomer << " " << customer.emailCustomer << " " << customer.pwCustomer << "mean ot" << endl;
-        file_user.writeFile_user_login();
+        file_user.writeFile_user_login(customer.usernameCustomer, customer.emailCustomer, customer.pwCustomer);
 
     }
 
@@ -396,12 +818,12 @@ class SellerLogin
     public: 
     void lock_program()
     {
-        string user_input_password;
-        string user_name_input;
-        string user_email_input;
+        string seller_input_password;
+        string seller_name_input;
+        string seller_email_input;
         int found = 0;
         bool correct = false;
-        file_user.readFile_user_login();
+        file_user.readFile_seller_login();
         system("color c");
         for (int j = 0; j < 4; j++)
         {
@@ -414,13 +836,13 @@ class SellerLogin
             cout << "Please enter seller name: ";
         // cin >> user_name_input;
             cin.ignore();
-            getline(cin, user_name_input);
+            getline(cin, seller_name_input);
 
             cout << "Please enter email: ";
-            cin >> user_email_input;
+            cin >> seller_email_input;
             cout << "Please enter password: ";
-            cin >> user_input_password;
-            if ( user_name_input == seller.usernameseller  && user_input_password == seller.pwseller && user_email_input == seller.emailseller )
+            cin >> seller_email_input;
+            if ( seller_name_input == seller.usernameseller  && seller_input_password == seller.pwseller && seller_email_input == seller.emailseller )
             {
                 correct = true;
                 system("cls");
@@ -446,7 +868,7 @@ class SellerLogin
         cout << "Enter new password: ";
         cin.ignore();
         getline(cin, seller.pwseller);
-        file_user.writeFile_user_login();
+        file_user.writeFile_seller_login(seller.usernameseller, seller.emailseller, seller.pwseller);
         system("cls");
 
     }
@@ -698,12 +1120,22 @@ int main ()
     Style style;
     File_handling file;
     CustomerLogin c;
-    Login l;
-    cout << l.usernameCustomer << " " << l.emailCustomer << " " << l.pwCustomer << "???????" << endl;
-    c. reset_pw();
-    file.writeFile_user_login();
-    style.seller_customer();
-    style.loading();
+    SellerLogin s;
+    s.reset_pw();
+
+    
+    
+    
+        //test userlogin
+    // file.readFile_user_login();
+    // c.lock_reset_pw();
+
+
+
+
+    //c. reset_pw(); 
+    // style.seller_customer();
+    // style.loading();
     cout << "done!" << endl;
     return 0;
 }
