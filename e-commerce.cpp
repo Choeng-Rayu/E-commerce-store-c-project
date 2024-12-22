@@ -134,6 +134,7 @@ class Customer_account
         total_customer--;
         cout << "Customer " << removedName << " deleted successfully." << endl;
     }
+<<<<<<< HEAD
     void load_customer(){
         fstream file_customer(FILE_PERSONAL, ios::in);
         if (!file_customer)
@@ -253,6 +254,26 @@ class Product
         delete toDelete;
         size--;
         cout << "Product " << removedName << " deleted successfully." << endl;
+=======
+    void buy_product(int price, string nameOFProduct, int amount, int dateOFbuying){
+        Node* temp = new Node;
+        temp->priceProduct = price;
+        temp->nameProduct  =nameOFProduct;
+        temp->amount = amount;
+        temp->idPoduct = amount_customer + 1;
+        temp->next = NULL;
+        if (front == NULL)
+        {
+            front = temp;
+            rear = temp;
+
+        }
+        else
+        {
+            rear->next = temp;
+            rear = temp;
+        }
+>>>>>>> aea760fa849cda8938d32a927f6b046f0b882210
     }
 };
 
@@ -265,6 +286,7 @@ class NST //search function
         root = NULL;
         total = 0;
     }
+<<<<<<< HEAD
     void insert(int id){
         root = insert_(root, id);
     }
@@ -281,6 +303,89 @@ class NST //search function
         while (file >> readIDFile) {
             root = insert_(root, readIDFile);
         }
+=======
+    void search_product_by_name(){
+        string SearchName;
+        cout<<"Enter the name of product that you want to search:"; cin>>SearchName;
+        Node* temp = root;
+        while (temp != NULL)
+        {
+            if (temp->nameProduct==SearchName)
+            {
+                cout<<"Product Name: "<<temp->nameProduct<<endl;
+                cout<<"Pruduct ID: "<<temp->idPoduct<<endl;
+                cout<<"Price of product: "<<temp->priceProduct<<endl;
+                cout<<"Type of product: "<<temp->typeProduct<<endl;
+                cout<<"Amount: "<<temp->amount<<endl;
+                return;  
+            }
+            temp = temp->next;
+        }
+        cout<<"Product not found!"<<endl;
+    }
+    void search_product_by_type(){
+        string SearchType;
+        cout<<"Enter the type of product that you want to search: ";cin>>SearchType;
+        Node* temp = root;
+        while (temp != NULL)
+        {
+            if (temp->typeProduct == SearchType)
+            {
+                cout<<"Product found: "<<temp->nameProduct<<endl;
+                cout<<"Type: "<<temp->typeProduct<<endl;
+                cout<<"Price of product: "<<temp->priceProduct<<endl;
+            }
+            temp = temp->next;
+        }
+        
+    }
+    void search_product_by_price(){
+        int SearchPrice;
+        cout<<"Enter the price of product that you want to search: ";cin>>SearchPrice;
+        Node* temp = root;
+        while(temp != NULL)
+        {
+            if (temp->priceProduct == SearchPrice)
+            {
+                cout<<"Product Name: "<<temp->nameProduct<<endl;
+                cout<<"Price of product: "<<temp->priceProduct<<endl;
+            }
+            temp = temp->next;
+        }
+    }
+    void search_product_by_id(){
+        int SearchId;
+        cout<<"Enter the id of product that you want to search: ";cin>>SearchId;
+        Node* temp = root;
+        while (temp != NULL)
+        {
+            if (temp-> idPoduct==SearchId)
+            {
+                cout<<"Product Name: "<<temp->nameProduct<<endl;
+                cout<<"Price of product: "<<temp->priceProduct<<endl;
+                cout<<"ID of product: "<<temp->idPoduct<<endl;
+            }
+            temp= temp->next;   
+        }
+        
+    }
+    void search_product_by_amount(){
+        int SearchAmount;
+        cout<<"Enter the Amount of product that you want to search: ";cin>>SearchAmount;
+        Node* temp = root;
+        while (temp != NULL)
+        {
+            if (temp->amount == SearchAmount)
+            {
+                cout<<"Product Name: "<<temp->nameProduct<<endl;
+                cout<<"Price of product: "<<temp->priceProduct<<endl;
+                cout<<"ID of product: "<<temp->idPoduct<<endl;
+                cout<<"Quantity of product: "<<temp->amount<<endl;
+            }
+            temp = temp->next;   
+        }
+        
+>>>>>>> aea760fa849cda8938d32a927f6b046f0b882210
     }
 };
 
