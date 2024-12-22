@@ -100,6 +100,11 @@ class date_handling
     }
 };
 
+class Admine
+{
+
+};
+
 class customer_account 
 {
     int total_customer;
@@ -194,8 +199,73 @@ public:
 };
 
 
-class
+class seller_account
+{
+    Node* head;
+    Node* tail;
+    int total_account_seller;
+    public:
+    seller_account(){
+        head = NULL;
+        tail = NULL;
+        total_account_seller = 0;
+    }
+    ~seller_account(){
 
+        //code here
+    }
+
+};
+
+
+class BST_for_customer
+{
+    Node* root;
+    BST_for_customer(){
+        root = NULL;
+    }
+    ~BST_for_customer(){
+
+    }
+    
+};
+
+
+class product_data
+{
+    Node* head;
+    Node* tail;
+    int total_product;
+    product_data(){
+        head = NULL;
+        tail = NULL;
+        total_product = 0;
+    }
+    ~product_data(){
+
+    }
+};
+
+class add_to_cart
+{
+    Node* head;
+    Node* tail;
+    int total_product_add_to_cart;
+    add_to_cart(){
+        head = NULL;
+        tail = NULL;
+        total_product_add_to_cart = 0;
+
+    }
+
+    ~add_to_cart(){
+
+
+    }
+
+};
+
+class 
 
 
 int main ()
