@@ -134,7 +134,6 @@ class Customer_account
         total_customer--;
         cout << "Customer " << removedName << " deleted successfully." << endl;
     }
-<<<<<<< HEAD
     void load_customer(){
         fstream file_customer(FILE_PERSONAL, ios::in);
         if (!file_customer)
@@ -381,7 +380,6 @@ class NST //search function
             temp = temp->next;   
         }
         
->>>>>>> aea760fa849cda8938d32a927f6b046f0b882210
     }
 };
 
@@ -1073,30 +1071,117 @@ class Style{
     public:
     CustomerLogin customer;
     SellerLogin seller;
-    void display_menu()
+    void display_menu_seller()
     {
         cout << "\n                   \t\t***************************************************************\n";
         cout << "                   \t\t************** Welcome to E-Commerce store *********************\n";
         cout << "                   \t\t***************************************************************\n\n";
         cout << "Please select option\n\n";
         cout << "-------------------------------\n";
-        cout << "-  #1. Add Record.            -\n";
+        cout << "-  #1. Add Product.            -\n";
         cout << "-------------------------------\n";
-        cout << "-  #2. Search Record.         -\n";
+        cout << "-  #2. Search Product.         -\n";
         cout << "-------------------------------\n";
-        cout << "-  #3. Edit Record.           -\n";
+        cout << "-  #3. Edit Product.           -\n";
         cout << "-------------------------------\n";
-        cout << "-  #4. Delete Record.         -\n";
+        cout << "-  #4. Delete Product.         -\n";
         cout << "-------------------------------\n";
-        cout << "-  #5. Display All Record.    -\n";
+        cout << "-  #5. Display All Product.    -\n";
         cout << "-------------------------------\n";
-        cout << "-  #6. Exit and Save.         -\n";
+        cout << "-  #6. Save Your product.      -\n";
         cout << "-------------------------------\n";
-        cout << "-  #7. Report Record.         -\n";
+        cout << "-  #7. Exit program.      -\n";
         cout << "-------------------------------\n";
-        cout << "-  #8. Reset Password.        -\n";
+        cout << "-  #8. Back to prevois.      -\n";
         cout << "-------------------------------\n";
-        cout << "-  #9. Analyst Your data.     -\n";
+        cout << "-  #9. Check profile      -\n";
+        cout << "-------------------------------\n";
+        
+    }
+    void display_menu_customer()
+    {
+        cout << "\n                   \t\t***************************************************************\n";
+        cout << "                   \t\t************** Welcome to E-Commerce store *********************\n";
+        cout << "                   \t\t***************************************************************\n\n";
+        cout << "Please select option\n\n";
+        cout << "-------------------------------\n";
+        cout << "-  #1. add Product to cart.            -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #2. Search Product.         -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #3. Display product you added to cart. -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #4. Delete Product you add to cart -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #5. check your profile.    -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #6. Get Invoice.         -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #7. Back to prevois        -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #8. buy Product in cart    -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #9. exit the program    -\n";
+        cout << "-------------------------------\n";
+
+    }
+    void display_menu_at_search_product()
+    {
+        cout << "Please select option\n\n";
+        cout << "-------------------------------\n";
+        cout << "-  #1. search product by type.-\n";
+        cout << "-------------------------------\n";
+        cout << "-  #2. search product by ID.  -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #3. Search Product by price. -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #4. Exit program.      -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #4. Back to preavois.      -\n";
+        cout << "-------------------------------\n";
+    }
+    void display_menu_at_search_production_by_type()
+    {
+        cout << "Please select option\n\n";
+        cout << "-------------------------------\n";
+        cout << "-  #1. Shoes.                 -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #2. Food.  -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #3. closthes. -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #4. vehicle.      -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #5. Back to preavois.      -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #6. Exit Program.      -\n";
+        cout << "-------------------------------\n";
+
+    }
+    void display_menu_customer()
+    {
+        cout << "\n                   \t\t***************************************************************\n";
+        cout << "                   \t\t************** Welcome to E-Commerce store *********************\n";
+        cout << "                   \t\t***************************************************************\n\n";
+        cout << "Please select option\n\n";
+        cout << "-------------------------------\n";
+        cout << "-  #1. add Product to cart.            -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #2. Search Product.         -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #3. Display product you added to cart. -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #4. Delete Product you add to cart -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #5. check your profile.    -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #6. Get Invoice.         -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #7. Back to prevois        -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #8. buy Product in cart    -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #9. exit the program    -\n";
         cout << "-------------------------------\n";
 
     }
@@ -1144,7 +1229,7 @@ class Style{
         system("cls");
     }
 
-    void loading_to_file ( )//style loading
+    void exit_program ( )//style loading
     {
         system ("cls");
         system("color 8");
@@ -1187,56 +1272,231 @@ class Style{
         cout << "\n\n\t\t\t\tData saved successfully!\n";
 
     }
-    void seller_customer()
-    {
-        char opt;
-        cout << "please choose option(only one letter): " << endl;
-        cout << "C. for Customer" << endl;
-        cout << "S. for Seller" << endl;
-        cout << "Enter your role: ";
-        cin >> opt;
-        switch (opt)
-        {
-        case 'c':
-        case 'C': 
-        system("cls");
-            customer.lock_reset_pw();
-            break;
-        case 'S':
-        case 's':
-            seller.lock_reset_pw();
-            break;
-        default:
-        cout << "invalid input" << endl;
-            break;
-        }
+    // void seller_customer_admin_asking()
+    // {
+    //     char opt;
+    //     cout << "please choose option(only one letter): " << endl;
+    //     cout << "C. for Customer" << endl;
+    //     cout << "S. for Seller" << endl;
+    //     cout << "Enter your role: ";
+    //     cin >> opt;
+    //     switch (opt)
+    //     {
+    //     case 'c':
+    //     case 'C': 
+    //     system("cls");
+    //         customer.lock_reset_pw();
+    //         break;
+    //     case 'S':
+    //     case 's':
+    //         seller.lock_reset_pw();
+    //         break;
+    //     default:
+    //     cout << "invalid input" << endl;
+    //         break;
+    //     }
+    // }
+    void display_menu_admin(){
+        cout << "\n                   \t\t***************************************************************\n";
+        cout << "                   \t\t************** Welcome to E-Commerce store *********************\n";
+        cout << "                   \t\t***************************************************************\n\n";
+        cout << "Please select option\n\n";
+        cout << "-------------------------------\n";
+        cout << "-  #1. display all customer.   -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #2. display all Seller      -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #3. search customer.           -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #4. searach seller         -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #5. delete seller    -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #6. delete customer      -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #7. Exit program.      -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #8. Display Product.      -\n";
+        cout << "-------------------------------\n";
+        cout << "-  #9. Exit Program     -\n";
+        cout << "-------------------------------\n";
+
     }
 
 };
 
 
 
+
 int main ()
 {
     Style style;
-    File_handling file;
-    CustomerLogin c;
-    SellerLogin s;
-    s.reset_pw();
+    style.loading();
+    char opt;
+        cout << "please choose option(only one letter): " << endl;
+        cout << "C. for Customer" << endl;
+        cout << "S. for Seller" << endl;
+        cout << "A. for Admin" << endl;
+        cout << "Enter your role: ";
+        cin >> opt;
+    char opt;
+    if( opt == 'c' || opt == 'C')
+    {
+        int opt;
+        while (true)
+        {
+            style.display_menu_customer();
+            cout << "Enter your option: ";
+            cin >> opt;
+            switch (opt)
+            {
+                case 1:
+                    //add product to cart
+                    break;
+                case 2:
+                    {
+                        int opt_type;
+                        style.display_menu_at_search_production_by_type();
+                        cout << "Enter your option: ";  
+                        cin >> opt_type;
+                        switch (opt_type)
+                        {
+                            case 1:
+                                //search product by type
+                                break;
+                            case 2:
+                                //search product by id
+                                break;
+                            case 3:
+                                //search product by price
+                                break;
+                            case 4:
+                                //exit program
+                                break;
+                            case 5:
+                                //back to previous
+                                break;
+                            default:
+                                cout << "invalid input" << endl;
+                                break;
+                        }
 
-    
-    
-    
-        //test userlogin
-    // file.readFile_user_login();
-    // c.lock_reset_pw();
-
-
-
-
-    //c. reset_pw(); 
-    // style.seller_customer();
-    // style.loading();
-    cout << "done!" << endl;
+                    }
+                case 3:
+                    //display product in cart
+                    break;
+                case 4:
+                    //delete product in cart
+                    break;
+                case 5:
+                    //check profile
+                    break;
+                case 6:
+                    //get invoice
+                    break;
+                case 7:
+                    //back to previous
+                    break;
+                case 8:
+                    //buy product in cart
+                    break;
+                case 9:
+                    //exit program
+                    break;
+                default:
+                    cout << "invalid input" << endl;
+                    break;
+            }
+        }
+        
+    }
+    else if ( opt == 's' || opt == 'S')
+    {
+        int opt;
+        while (true)
+        {
+            style.display_menu_seller();
+            cout << "Enter your option: ";
+            cin >> opt;
+            switch (opt)
+            {
+                case 1:
+                    //add product
+                    break;
+                case 2:
+                    //search product
+                    style.display_menu_at_search_production_by_type();
+                    break;
+                case 3:
+                    //edit product
+                    break;
+                case 4:
+                    //delete product
+                    break;
+                case 5:
+                    //display all product
+                    break;
+                case 6:
+                    //save product
+                    break;
+                case 7:
+                    //exit program
+                    break;
+                case 8:
+                    //back to previous
+                    break;
+                case 9:
+                    //check profile
+                    break;
+                default:
+                    cout << "invalid input" << endl;
+                    break;
+            }
+        }
+    }
+    else if ( opt == 'A' || opt == 'a')
+    {
+        int opt;
+        while (true)
+        {
+            style.display_menu_admin();
+            cout << "Enter your option: ";
+            cin >> opt;
+            switch (opt)
+            {
+                case 1:
+                    //display all customer
+                    break;
+                case 2:
+                    //display all seller
+                    break;
+                case 3:
+                    //search customer
+                    break;  
+                case 4:
+                    //search seller
+                    break;
+                case 5:
+                    //delete seller
+                    break;  
+                case 6:
+                    //delete customer
+                    break;  
+                case 7:
+                    exit(1);
+                    break;
+                case 8: 
+                    //display product
+                    break; 
+                    default:
+                    cout << "invalid input" << endl;     
+            }
+        
+        }
+    }
+    else
+    {
+        cout << "invalid input" << endl;
+    }
     return 0;
 }
