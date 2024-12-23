@@ -254,7 +254,6 @@ class Product
         delete toDelete;
         size--;
         cout << "Product " << removedName << " deleted successfully." << endl;
-=======
     void buy_product(int price, string nameOFProduct, int amount, int dateOFbuying){
         Node* temp = new Node;
         temp->priceProduct = price;
@@ -273,7 +272,6 @@ class Product
             rear->next = temp;
             rear = temp;
         }
->>>>>>> aea760fa849cda8938d32a927f6b046f0b882210
     }
 };
 
@@ -286,7 +284,6 @@ class NST //search function
         root = NULL;
         total = 0;
     }
-<<<<<<< HEAD
     void insert(int id){
         root = insert_(root, id);
     }
@@ -303,7 +300,6 @@ class NST //search function
         while (file >> readIDFile) {
             root = insert_(root, readIDFile);
         }
-=======
     void search_product_by_name(){
         string SearchName;
         cout<<"Enter the name of product that you want to search:"; cin>>SearchName;
