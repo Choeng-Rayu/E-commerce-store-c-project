@@ -169,7 +169,7 @@ class customer_account
         }
         else {
             tail->next = newCustomer;
-            newCustomer = tail;
+            tail = newCustomer;
         }
         total_customer++;
     }
@@ -221,7 +221,7 @@ class customer_account
         return false;
     }
 
-    void delete_customer_position() {
+    void delete_customer(string name, string password) {
         string name;
         string password;
 
@@ -229,13 +229,6 @@ class customer_account
             cout << "There is no customer account" << endl;
             return;
         }
-
-        cout << "Enter Customer name you want to delete: ";
-        cin.ignore();
-        getline(cin, name);
-        cout << "Enter Password: ";
-        getline(cin, password);
-
         Node* delete_customer = nullptr;
         Node* current = head;
         Node* previous = nullptr;

@@ -1,0 +1,2 @@
+Name,Email,Phone,Password,ID,Money
+Bob,bob@gmail.com,987654321,pass456,2,2000
