@@ -87,24 +87,24 @@ struct Node
     }date;
 };
 
-class date_handling
-{
-    Node::Date date;
-    public:
-    void get_date(){
-        time_t now = time(0);
-        tm* ltm = localtime(&now);
-        date.year = 1900 + ltm->tm_year;
-        date.month = 1 + ltm->tm_mon;
-        date.days = ltm->tm_mday;
-    }
+// class date_handling
+// {
+//     Node::Date date;
+//     public:
+//     void get_date(){
+//         time_t now = time(0);
+//         tm* ltm = localtime(&now);
+//         date.year = 1900 + ltm->tm_year;
+//         date.month = 1 + ltm->tm_mon;
+//         date.days = ltm->tm_mday;
+//     }
 
-};
+// };
 
-class Admine
-{
+// class Admine
+// {
 
-};
+// };
 
 class customer_account 
 {
@@ -131,9 +131,8 @@ class customer_account
     void add_customer_input_data(){
         string name, email, phone, password;
         int money, id;
-
+        name = "Unknown";
         cout << "Enter your name: ";
-        cin.ignore();
         getline(cin, name);
 
         cout << "Enter your email: ";
@@ -170,7 +169,7 @@ class customer_account
         }
         else {
             tail->next = newCustomer;
-            tail = newCustomer;
+            newCustomer = tail;
         }
         total_customer++;
     }
@@ -180,6 +179,7 @@ class customer_account
         string name, email, phone, password;
         int money, id;
         string line;
+        getline(file, line); // Skip the header line
         while (getline(file, line))
         {
             stringstream ss(line);
@@ -199,6 +199,7 @@ class customer_account
         fstream file(FILE_PERSONAL, ios::out);
         if (!file.is_open()) return;
         Node* current = head;
+        file << "Name,Email,Phone,Password,Id,Money" << endl;//skip the header line
         while (current)
         {
             file << current->customer.name_customer << ","
@@ -338,11 +339,11 @@ class customer_account
         }
         Node* current = head;
         while (current != nullptr) {
-            cout << "Name: " << current->customer.name_customer << endl
-                << "ID: " << current->customer.id_customer << endl
-                << "Email: " << current->customer.email_customer << endl
-                << "Phone: " << current->customer.phone_customer << endl
-                << "Money: " << current->customer.money_customer << endl
+            cout << "Name: " << current->customer.name_customer << " "
+                << "ID: " << current->customer.id_customer << " "
+                << "Email: " << current->customer.email_customer << " "
+                << "Phone: " << current->customer.phone_customer << " "
+                << "Money: " << current->customer.money_customer << " "
                 << "Password: " << current->customer.password_customer << endl;
             current = current->next;
         }
@@ -548,65 +549,88 @@ class seller_account
         }
         cout << "Seller not found!" << endl;
     }
+    
     int get_total_seller(){
         return total_account_seller;
     }
 
+    void display_seller(){
+        if (check_seller_is_empty())
+        {
+            cout << "There is no seller account" << endl;
+            return;
+        }
+        Node* current = head;
+        while (current != nullptr)
+        {
+            cout << "Name: " << current->seller.username_seller << endl
+                << "ID: " << current->seller.id_seller << endl
+                << "Email: " << current->seller.email_seller << endl
+                << "Phone: " << current->seller.phone_seller << endl
+                << "Money: " << current->seller.money_seller << endl
+                << "Password: " << current->seller.password_seller << endl;
+            current = current->next;
+        }
+    }
+
 };
 
 
-class BST_for_customer
-{
-    Node* root;
-    BST_for_customer(){
-        root = NULL;
-    }
-    ~BST_for_customer(){
+// class BST_for_customer
+// {
+//     Node* root;
+//     BST_for_customer(){
+//         root = NULL;
+//     }
+//     ~BST_for_customer(){
 
-    }
+//     }
     
-};
+// };
 
 
-class product_data
-{
-    Node* head;
-    Node* tail;
-    int total_product;
-    product_data(){
-        head = NULL;
-        tail = NULL;
-        total_product = 0;
-    }
-    ~product_data(){
+// class product_data
+// {
+//     Node* head;
+//     Node* tail;
+//     int total_product;
+//     product_data(){
+//         head = NULL;
+//         tail = NULL;
+//         total_product = 0;
+//     }
+//     ~product_data(){
 
-    }
-};
+//     }
+// };
 
-class add_to_cart
-{
-    Node* head;
-    Node* tail;
-    int total_product_add_to_cart;
-    add_to_cart(){
-        head = NULL;
-        tail = NULL;
-        total_product_add_to_cart = 0;
+// class add_to_cart
+// {
+//     Node* head;
+//     Node* tail;
+//     int total_product_add_to_cart;
+//     add_to_cart(){
+//         head = NULL;
+//         tail = NULL;
+//         total_product_add_to_cart = 0;
 
-    }
+//     }
 
-    ~add_to_cart(){
+//     ~add_to_cart(){
 
 
-    }
+//     }
 
-};
+// };
 
 int main ()
 {
     customer_account customer;
     seller_account seller;
     customer.load_data_from_file();
+    customer.display_customer();
+    customer.add_customer_input_data();
+    customer.save_data_to_file();
     customer.display_customer();
     return 0;
 }
