@@ -580,6 +580,28 @@ class seller_account
 //     }
     
 // };
+// class BST_for_seller
+// {
+//     Node* root;
+//     BST_for_customer(){
+//         root = NULL;
+//     }
+//     ~BST_for_customer(){
+
+//     }
+    
+// };
+// class BST_for_product
+// {
+//     Node* root;
+//     BST_for_customer(){
+//         root = NULL;
+//     }
+//     ~BST_for_customer(){
+
+//     }
+    
+// };
 
 
 // class product_data
