@@ -598,7 +598,7 @@ class seller_account
 //         root = NULL;
 //     }
 //     ~BST_for_customer(){
-
+x
 //     }
     
 // };
@@ -638,7 +638,8 @@ class seller_account
 
 // };
 
-int main ()
+
+ main ()
 {
     customer_account customer;
     seller_account seller;
