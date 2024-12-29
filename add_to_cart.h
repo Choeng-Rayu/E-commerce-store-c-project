@@ -731,27 +731,25 @@ private:
         
     // }
 
+    void add_product_to_cart(string name_product, int id_product, float price_product, int amount_product, string type_product, string date) {
+        node_cart* new_product = new node_cart;
+        new_product->product.nameProduct = name_product;
+        new_product->product.idPoduct = id_product;
+        new_product->product.priceProduct = price_product;
+        new_product->product.quantity_product = amount_product;
+        new_product->product.catagory_product = type_product;
+        new_product->product.date = date;
+        new_product->next = nullptr;
+        if (head_cart == nullptr) {
+            head_cart = new_product;
+            tail = new_product;
+        } else {
+            tail->next = new_product;
+            tail = new_product;
+        }
+        totalProduct++;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
     void add_to_cart_data_transfer(int id, int quantity) {
         ProductManager* p;
         node_product* temp = p->head; // Start at the head of the linked list
@@ -781,26 +779,6 @@ private:
 
         // If no product matches the ID
         cout << "Product with ID " << id << " not found.\n";
-    }
-
-    void add_product_to_cart(string name_product, int id_product, float price_product, int amount_product, string type_product, string date) {
-        node_cart* new_product = new node_cart;
-        new_product->product.nameProduct = name_product;
-        new_product->product.idPoduct = id_product;
-        new_product->product.priceProduct = price_product;
-        new_product->product.quantity_product = amount_product;
-        new_product->product.catagory_product = type_product;
-        new_product->product.date = date;
-        new_product->next = nullptr;
-        if (head_cart == nullptr) {
-            head_cart = new_product;
-            tail = new_product;
-        } else {
-            tail->next = new_product;
-            tail = new_product;
-        }
-        totalProduct++;
-
     }
 
     void save_cart_to_file() {
@@ -1026,4 +1004,5 @@ private:
     //         }
     //     } while (choice != 6);
     // }
+    
 };
