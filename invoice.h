@@ -232,7 +232,6 @@ class Invoice
             << "8. Save to invoice\n";
     }
 
-
 };
 
 // class history_customer

@@ -253,8 +253,8 @@ int main ()
                             cin >> id_product;
                             cout << "Enter Amount for add to cart: ";
                             cin >> quantity;
-                            cart->add_to_cart_data_transfer(id_product, quantity);
-                            cout << "hi";
+                            cart->add_to_cart_data_transfer( product, id_product, quantity);
+
                         }
                         break;
                     case 0:
@@ -301,21 +301,16 @@ int main ()
                                     {
                                         system("cls");
                                         system("color 3A");
-                                        string name, type,date;
-                                        int id, amount;
-                                        float price;
-                                        cout << "Enter Name product:";
-                                        cin.ignore();
-                                        getline(cin, name);
-                                        cout << "Enter ID product:";
-                                        cin >> id;
-                                        cout << "Enter Price product:";
-                                        cin >> price;
-                                        cout << "Enter Amount product:";
-                                        cin >> amount;
-                                        cout << "Enter Type product:";
-                                        cin >> type;
-                                        invoice->product_add_to_invoice(name, id, price, amount, type, date = invoice->getCurrentTime());
+                                        system("color 0A");
+                                        {
+                                            int id_product, quantity;
+                                            cout << "Enter ID for add product to cart: " ;
+                                            cin >> id_product;
+                                            cout << "Enter Amount for add to cart: ";
+                                            cin >> quantity;
+                                            cart->add_to_cart_data_transfer( product, id_product, quantity);
+                                            
+                                        }
                                         break;
                                     }
                                     case 2:

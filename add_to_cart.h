@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include "invoice.h"
 using namespace std;
 
 #define FILE_BUY_NOW "buy_now.csv"  // store all the buy now of the customer
@@ -750,24 +751,28 @@ private:
         totalProduct++;
 
     }
-    void add_to_cart_data_transfer(int id, int quantity) {
-        ProductManager* p;
-        node_product* temp = p->head; // Start at the head of the linked list
+    void add_to_cart_data_transfer(ProductManager* p, int id, int quantity) {
+        if (!p) {
+            cout << "Error: ProductManager instance not available.\n";
+            return;
+        }
 
+        node_product* temp = p->head; // Start at the head of the linked list
+        Invoice invoice;
         while (temp != nullptr) {
-            if (temp->product.idPoduct == id) 
-            { // Match found
-                if (temp->product.quantity_product >= quantity) {
+            if (temp->product.idPoduct == id) { // Match found
+                if (temp->product.quantity_product >= quantity) { // Sufficient stock
                     string name = temp->product.nameProduct;
                     string type = temp->product.catagory_product;
                     float price = temp->product.priceProduct;
 
                     temp->product.quantity_product -= quantity; // Decrement the stock
-                    
+
                     string date = getCurrentTime(); // Get the current date
                     add_product_to_cart(name, id, price, quantity, type, date); // Add product to cart
-
-                    return; // Exit function after processing
+                    invoice.product_add_to_invoice(name, id, price, quantity, type, date);
+                    cout << "Product " << name << " added to cart.\n";
+                    return; // Exit after adding to the cart
                 } else {
                     cout << "Insufficient stock for Product ID " << id << ". Available: " 
                         << temp->product.quantity_product << "\n";
@@ -780,6 +785,7 @@ private:
         // If no product matches the ID
         cout << "Product with ID " << id << " not found.\n";
     }
+
 
     void save_cart_to_file() {
         ofstream file;
