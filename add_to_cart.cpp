@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <iomanip>
 using namespace std;
 
 #define FILE_BUY_NOW "buy_now.csv"  // store all the buy now of the customer
@@ -14,6 +15,7 @@ struct Product
     int idPoduct;
     float priceProduct;
     int quantity_product;
+    string date;
 };
 
 struct Node {
@@ -35,6 +37,8 @@ private:
         cout << "4. Display product in cart\n";
         cout << "5. Pay money\n";
         cout << "6. Check Your profile\n";
+        cout << "7. Edit Your product in cart\n";
+        cout << "8. Save your cart to file\n";
     }
     void shoping_menu(){
         cout << "0. Exit\n";
@@ -43,9 +47,21 @@ private:
         cout << "3. Display Product in cart\n";
         cout << "4. edit Product in cart\n";
         cout << "5. Pay money\n";
+        cout << "6. Save cart to file\n";
 
     }
+    string getCurrentTime() {
 
+        // Get the current time
+        time_t t = time(nullptr); 
+        tm* now = localtime(&t);
+
+        // Format the time into a string
+        char buffer[100];
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", now);
+
+        return string(buffer);
+    }
     add_to_cart(){
         head = nullptr;
         tail = nullptr;
@@ -60,14 +76,14 @@ private:
             current = next;
         }
     }
-    void add_product_to_cart(string name_product, int id_product, float price_product, int amount_product, string type_product) {
-        Node* new_product;
-        Node* newProduct = new Node;
+    void add_product_to_cart(string name_product, int id_product, float price_product, int amount_product, string type_product, string date) {
+        Node* new_product = new Node;
         new_product->product.nameProduct = name_product;
         new_product->product.idPoduct = id_product;
         new_product->product.priceProduct = price_product;
         new_product->product.quantity_product = amount_product;
         new_product->product.catagory_product = type_product;
+        new_product->product.date = date;
         new_product->next = nullptr;
         if (head == nullptr) {
             head = new_product;
@@ -88,6 +104,7 @@ private:
             while (temp != nullptr) {
                 file << temp->product.nameProduct << ","
                      << temp->product.catagory_product << ","
+                     << temp->product.date << ","
                      << temp->product.idPoduct << ","
                      << temp->product.priceProduct << ","
                      << temp->product.quantity_product << "\n";
@@ -99,75 +116,52 @@ private:
             cerr << "Unable to open file for writing.\n";
         }
     }
-
+    void display_product_in_cart() {
+        Node* temp = head;
+        int count = 1;
+        cout << "\n\t\t\t\t\t================ Pre-Pay ================\n"; 
+        cout << "No\tName\t\t\tCategory\t\tID\t\tPrice\t\tQuantity\tDate\n";
+        while (temp != nullptr) {
+            cout << count << "\t"
+                << setw(20) << left << temp->product.nameProduct << "\t"
+                << setw(20) << left << temp->product.catagory_product << "\t"
+                << setw(10) << left << temp->product.idPoduct << "\t"
+                << setw(10) << left << temp->product.priceProduct << "\t"
+                << setw(10) << left << temp->product.quantity_product << "\t"
+                << temp->product.date << "\n";
+            temp = temp->next;
+            count++;
+        }
+        cout << "Total product in cart: " << totalProduct << endl;
+        cout << "\t\t\t\t\t==========================================\n";
+    }
     void load_cart_file() {
         ifstream file;
         file.open(FILE_NAME);
-        string name, category;
+        string name, category, date;
         int id, quantity;
         float price;
         string line;
+        string skip_line;
+        getline(file, skip_line); // Skip the first line
         if (file.is_open()) {
             while (getline(file, line)) {
                 stringstream ss(line);
                 getline(ss, name, ',');
                 getline(ss, category, ',');
-                ss >> id >> price >> quantity;
-                // getline(ss, id, ',');
-                // getline(ss, price, ',');
-                // getline(ss, quantity, ',');
-                cout << "Name: " << name << ", Category: " << category << ", ID: " << id
-                     << ", Price: " << price << ", Quantity: " << quantity << "\n";
-                add_product_to_cart(name, id, price, quantity, category);
+                getline(ss, date, ',');
+                ss >> id;
+                ss.ignore(1, ','); // Ignore the comma
+                ss >> price;
+                ss.ignore(1, ','); // Ignore the comma
+                ss >> quantity;
+                add_product_to_cart(name, id, price, quantity, category, date);
             }
             file.close();
         } else {
             cerr << "Unable to open file for reading.\n";
         }
     }
-
-    // void updateProductInFile(int id, const Product& updatedProduct) {
-    //     ifstream file;
-    //     file.open(FILE_NAME);
-    //     ofstream tempFile;
-    //     tempFile.open("temp.csv");
-    //     string line;
-    //     bool found = false;
-
-    //     if (file.is_open() && tempFile.is_open()) {
-    //         while (getline(file, line)) {
-    //             stringstream ss(line);
-    //             string name, category, idStr, price, quantity;
-    //             getline(ss, name, ',');
-    //             getline(ss, category, ',');
-    //             getline(ss, idStr, ',');
-    //             getline(ss, price, ',');
-    //             getline(ss, quantity, ',');
-
-    //             if (stoi(idStr) == id) {
-    //                 tempFile << updatedProduct.nameProduct << ","
-    //                          << updatedProduct.catagory_product << ","
-    //                          << updatedProduct.idPoduct << ","
-    //                          << updatedProduct.priceProduct << ","
-    //                          << updatedProduct.quantity_product << "\n";
-    //                 found = true;
-    //             } else {
-    //                 tempFile << line << "\n";
-    //             }
-    //         }
-    //         file.close();
-    //         tempFile.close();
-    //         remove(FILE_NAME);
-    //         rename("temp.csv", FILE_NAME);
-
-    //         if (!found) {
-    //             cerr << "Product with ID " << id << " not found in the file.\n";
-    //         }
-    //     } else {
-    //         cerr << "Unable to open file for updating.\n";
-    //     }
-    // }
-
     void delete_product_in_cart() {
         int product_id;
         cout << "Enter list in your cart to delete that product: ";
@@ -205,6 +199,70 @@ private:
         }
 
     }
+    void pay_money(){
+        Node* current = head;
+        float total = 0;
+        cout << "\n================ INVOICE ================\n"; 
+        cout << "Name\t\t\tCategory\tID\t\tPrice\tQuantity\t\t\tDate\n";
+        while(current != nullptr){
+            cout << current->product.nameProduct << "\t\t\t" << current->product.catagory_product << "\t\t" << current->product.idPoduct << "\t\t" << current->product.priceProduct << "\t\t" << current->product.quantity_product << "\t" << current->product.date <<  "\n";
+            total += current->product.priceProduct * current->product.quantity_product;
+            current = current->next;
+        }
+        cout << "\n\t\tTotal money: " << total << "$" << endl;
+        cout << "Please Enter your money: ";
+        float money;
+        cin >> money;
+        if(money < total){
+            cout << "Not enough money\n";
+        }else if(money == total){
+            cout << "Pay successfully at" << getCurrentTime() << endl;
+            cout << "====================================Thank you for shopping with us==========================================\n";
+            head = nullptr;
+            tail = nullptr;
+            totalProduct = 0;
+        }else{
+            cout << "Your product did not pay: " << endl;
+        }
+
+    }
+    void update_product_in_cart() {
+    int product_id;
+    cout << "Enter id product to update: ";
+    cin >> product_id;
+    string name_update;
+    if (head == nullptr) {
+        cout << "Cart is empty\n";
+        return;
+    }
+    Node* current = head;
+    bool found = false;
+    while (current != nullptr) {
+        if (current->product.idPoduct == product_id) {
+            found = true;
+            cout << "Product found in cart\n";
+            cout << "Product name: " << current->product.nameProduct << endl;
+            cout << "Product ID: " << current->product.idPoduct << endl;
+            cout << "Product Price: " << current->product.priceProduct << endl;
+            cout << "Product Amount: " << current->product.quantity_product << endl;
+            cout << "Product Type: " << current->product.catagory_product << endl;
+            cout << "Product Date: " << current->product.date << endl;
+            name_update = current->product.nameProduct;
+            cout << "Enter new Amount product: ";
+            cin >> current->product.quantity_product;
+            cout << "Product updated successfully\n";
+            break;
+        }
+        current = current->next; // Move to the next node
+    }
+    if (!found) {
+        cout << "Product not found in cart\n";
+    } else {
+        cout << "Product " << name_update << " updated in cart\n";
+    }
+}
+
+    
 
     // void run() {
     //     int choice;
@@ -263,88 +321,140 @@ private:
     // }
 };
 
-78
 
 
 
 
 
-int main (){
+int main() {
     add_to_cart* cart = new add_to_cart;
     int choice;
-    while (true)
-    {
+    cart->load_cart_file();
+    while (true) {
         cart->displayMenu();
         cout << "Enter your choice: ";
         cin >> choice;
-        switch (choice)
-        {
-            case 1:
-            {   while(true){
+        switch (choice) {
+            case 1: {
+                while (true) {
                     int opt;
                     cart->shoping_menu();
                     cout << "Enter your choice: ";
                     cin >> opt;
-                    switch (opt)
-                    {
-                        case 1:
-                        {
+                    switch (opt) {
+                        case 1: {
+                            system("cls");
                             string name, type;
                             int id, amount;
                             float price;
-                            cout << "Enter Name product:";
+                            cout << "Enter Name product: ";
                             cin.ignore();
                             getline(cin, name);
-                            cout << "Enter ID product:";
+                            cout << "Enter ID product: ";
                             cin >> id;
-                            cout << "Enter Price product:";
+                            cout << "Enter Price product: ";
                             cin >> price;
-                            cout << "Enter Amount product:";
+                            cout << "Enter Amount product: ";
                             cin >> amount;
-                            cout << "Enter Type product:";
-                            cin >> type;
-                            cart->add_product_to_cart(name, id, price, amount, type);
+                            cout << "Enter Type product: ";
+                            cin.ignore();
+                            getline(cin, type);
+                            cart->add_product_to_cart(name, id, price, amount, type, cart->getCurrentTime());
                             break;
                         }
-                        case 2:
-                        {
+                        case 2: {
+                            system("cls");
+                            system("color 4");  
                             cart->delete_product_in_cart();
                             break;
                         }
-                        case 3:
-                        {
-                            cart->load_cart_file();
+                        case 3: {
+                            system("cls");
+                            system("color 3");
+                            cart->display_product_in_cart();
                             break;
                         }
-                        case 4:
-                        {
-                            //cart->updateProductInFile(1, {"book", "study", 1, 100, 2});
+                        case 4: {
+                            system("cls");
+                            system("color 5");
+                            cart->update_product_in_cart();
                             break;
                         }
-                        case 5:
-                        {
+                        case 5: {
+                            system("cls");
+                            system("color 6");
+                            cart->pay_money();
+                            break;
+                        }
+                        case 6: {
+                            system("cls");
+                            system("color 7");
                             cart->save_cart_to_file();
                             break;
                         }
-                        case 0:
-                        {
+                        case 0: {
                             cout << "Exit successfully." << endl;
                             exit(0);
                         }
-                        default:
-                        {
+                        default: {
                             cout << "Invalid choice." << endl;
                             break;
                         }
                     }
-
                 }
-                break;
-            default:
-            {
-                cout << "Invalid choice." << endl;
+                break; // Add break here
+            }
+            case 0: {
+                cout << "Exiting the program.\n";
+                delete cart; // Deallocate memory before exiting
+                return 0;
+            }
+            case 2: {
+                system("cls");
+                system("color 2");
+                cart->display_product_in_cart();
                 break;
             }
+            case 3: {
+                system("cls");
+                system("color 1");
+                cart->update_product_in_cart();
+                break;
+            }
+            case 4: {
+                system("cls");
+                system("color e");
+                cart->display_product_in_cart();
+                break;
+            }
+            case 5: {
+                system("cls");
+                system("color d");
+                cart->pay_money();
+                break;
+            }
+            case 6: {
+                system("cls");
+                system("color c");
+                //check your profile
+                cout << "Your profile\n";
+                break;
+            }
+            case 7: {
+                system("cls");
+                system("color b");
+                cart->update_product_in_cart();
+                break;
+            }
+            case 8: {
+                system("cls");
+                system("color a");
+                cart->save_cart_to_file();
+                break;
+            }
+            default: {
+                cout << "Invalid choice." << endl;
+                break;
             }
         }
     }

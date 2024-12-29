@@ -105,6 +105,7 @@ class history_customer
             current = current->next;
         }
         file.close();
+        cout <<"Saved to file successfully." << endl;
     }
     void load_from_file()
     {
