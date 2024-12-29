@@ -77,7 +77,6 @@ class Style{
 
             if ( i == 0)
             {
-                cout << "You login successfully!";
                 Sleep(1000);
                 system("color b");
             }
@@ -108,6 +107,8 @@ class Style{
                 system("color f");
             }
         }
+        cout << "You login successfully!";
+        Sleep(3000);
         system("cls");
     }
 
@@ -151,7 +152,7 @@ class Style{
             }
         }
         system ("cls");
-        cout << "\n\n\t\t\t\tData saved successfully!\n";
+        //cout << "\n\n\t\t\t\tData saved successfully!\n";
 
     }
     
@@ -219,6 +220,8 @@ int main ()
     product->read_products();
     int opt;
     bool back = true;
+    //design
+    style.loading_style();
     while (true)
     {
 
@@ -256,6 +259,7 @@ int main ()
                         break;
                     case 0:
                         cout << "You are exited the program" << endl;
+                        style.exit_program_style ();
                         exit(0);
                         break;
                     case 2:
@@ -346,6 +350,7 @@ int main ()
                                     {
                                         system("cls");
                                         system("color 4A");
+                                        style.exit_program_style ();
                                         cout << "Exit successfully." << endl;
                                         exit(0);
                                     }
@@ -468,6 +473,7 @@ int main ()
                                                     cout << " Your are backed to previouse!" << endl;
                                                     break;
                                                 case 0: {
+                                                    style.exit_program_style ();
                                                     cout << "Exit successfully." << endl;
                                                     exit(0);
                                                 }
@@ -480,6 +486,7 @@ int main ()
                                         break; // Add break here
                                     }
                                     case 0: {
+                                        style.exit_program_style ();
                                         cout << "Exiting the program.\n";
                                         delete cart; // Deallocate memory before exiting
                                         return 0;
@@ -553,6 +560,7 @@ int main ()
                 {
                     case 0:
                     {
+                        style.exit_program_style ();
                         cout << "You are exited the program" << endl;
                         exit(0);
                     }         
