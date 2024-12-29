@@ -48,6 +48,14 @@ class Invoice
         invoice_date = getCurrentTime();
         invoice_id = "Unknow";
     }
+    ~Invoice() {
+        while (top != nullptr) {
+            Node* temp = top;
+            top = top->next;
+            delete temp;
+        }
+    }
+
     void product_add_to_invoice(string name, int id, float price, int amount, string type, string date)
     {
         Node* newProduct = new Node;
@@ -145,6 +153,11 @@ class Invoice
     void load_invoice_from_file(){
         ifstream file;
         file.open(FILE_INVOICE);
+        if (!file.is_open()) {
+            cerr << "Error: Could not open file.\n";
+            return;
+        }
+
         string name, category, date;
         int id, quantity;
         float price;
@@ -174,6 +187,11 @@ class Invoice
     }
     void display_history_of_customer_from_file(){
         fstream file(FILE_HISTORY, ios::in);
+        if (!file.is_open()) {
+            cerr << "Error: Could not open file.\n";
+            return;
+        }
+
         string line;
         while(getline(file, line)){
             cout << line << endl;
