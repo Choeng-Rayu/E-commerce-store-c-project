@@ -5,7 +5,7 @@
 #include <cctype>
 using namespace std;
 
-#define FILE_NAME "ProductdataClass.csv"
+#define FILE_PRODUCT_DATA "ProductdataClass.csv"
 #define MAX_QUANTITY 1000000 // Define a maximum quantity limit
 // PRODUCT
 struct Product
@@ -22,17 +22,18 @@ struct Product
     }
 };
 
-struct Node
+
+struct node_product
 {
     Product product;
-    Node *next;
+    node_product *next;
 };
 
 class ProductManager
 {
-private:
-    Node *head;
-    Node *tail;
+    public:
+    node_product *head;
+    node_product *tail;
 
     void display_menu()
     {
@@ -84,11 +85,11 @@ private:
         if (!head || !head->next)
             return;
 
-        Node *sorted = nullptr;
+        node_product *sorted = nullptr;
 
         while (head)
         {
-            Node *current = head;
+            node_product *current = head;
             head = head->next;
 
             if (!sorted || sorted->product.catagory_product > current->product.catagory_product ||
@@ -99,7 +100,7 @@ private:
             }
             else
             {
-                Node *temp = sorted;
+                node_product *temp = sorted;
                 while (temp->next && (temp->next->product.catagory_product < current->product.catagory_product ||
                                       (temp->next->product.catagory_product == current->product.catagory_product && temp->next->product.idPoduct < current->product.idPoduct)))
                 {
@@ -115,10 +116,10 @@ private:
 
     void clear_list()
     {
-        Node *current = head;
+        node_product *current = head;
         while (current != nullptr)
         {
-            Node *next = current->next;
+            node_product *next = current->next;
             delete current;
             current = next;
         }
@@ -139,18 +140,18 @@ public:
 
     void add_product_to_list(const Product &product)
     {
-        Node *newNode = new Node;
-        newNode->product = product;
-        newNode->next = nullptr;
+        node_product *newnode_product = new node_product;
+        newnode_product->product = product;
+        newnode_product->next = nullptr;
         if (head == nullptr)
         {
-            head = newNode;
-            tail = newNode;
+            head = newnode_product;
+            tail = newnode_product;
         }
         else
         {
-            tail->next = newNode;
-            tail = newNode;
+            tail->next = newnode_product;
+            tail = newnode_product;
         }
     }
 
@@ -159,10 +160,10 @@ public:
         sort_linked_list(); // Sort the linked list by category and ID
 
         ofstream outFile;
-        outFile.open(FILE_NAME, ios::trunc); // Open file in truncate mode to clear it first
+        outFile.open(FILE_PRODUCT_DATA, ios::trunc); // Open file in truncate mode to clear it first
         if (outFile.is_open())
         {
-            Node *temp = head;
+            node_product *temp = head;
             while (temp != nullptr)
             {
                 to_upper_case(temp->product.nameProduct);
@@ -186,7 +187,7 @@ public:
     void read_products()
     {
         ifstream file;
-        file.open(FILE_NAME);
+        file.open(FILE_PRODUCT_DATA);
         string line;
         if (file.is_open())
         {
@@ -218,7 +219,7 @@ public:
 
     void update_product_in_list(int id, const Product &updatedProduct)
     {
-        Node *temp = head;
+        node_product *temp = head;
         bool found = false;
         while (temp != nullptr)
         {
@@ -238,8 +239,8 @@ public:
 
     void delete_product_from_list(int id)
     {
-        Node *temp = head;
-        Node *prev = nullptr;
+        node_product *temp = head;
+        node_product *prev = nullptr;
         bool found = false;
 
         while (temp != nullptr)
@@ -275,7 +276,7 @@ public:
     void delete_product_from_file(int id)
     {
         ifstream file;
-        file.open(FILE_NAME);
+        file.open(FILE_PRODUCT_DATA);
         ofstream tempFile;
         tempFile.open("temp.csv");
         string line;
@@ -304,8 +305,8 @@ public:
             }
             file.close();
             tempFile.close();
-            remove(FILE_NAME);
-            rename("temp.csv", FILE_NAME);
+            remove(FILE_PRODUCT_DATA);
+            rename("temp.csv", FILE_PRODUCT_DATA);
 
             if (!found)
             {
@@ -321,7 +322,7 @@ public:
     void display_products()
     {
         cout << "Products in list:\n";
-        Node *temp = head;
+        node_product *temp = head;
         while (temp != nullptr)
         {
             cout << "Name: " << temp->product.nameProduct << ", Category: " << temp->product.catagory_product
@@ -330,7 +331,22 @@ public:
             temp = temp->next;
         }
     }
-
+    void sell_product_by_ID(int id){
+            node_product *temp = head;
+            while (temp != nullptr)
+            {
+                if (temp->product.idPoduct == id)
+                {
+                    cout << "Name: " << temp->product.nameProduct << ", Category: " << temp->product.catagory_product
+                         << ", ID: " << temp->product.idPoduct << ", Price: " << temp->product.priceProduct
+                         << ", Quantity: " << temp->product.quantity_product << "\n";
+                        temp->product.quantity_product--;
+                    return;
+                }
+                temp = temp->next;
+            }
+            cout << "Product with ID " << id << " not found.\n";
+    }
     void search_product()
     {
         int choice;
@@ -347,7 +363,7 @@ public:
             int id;
             cout << "Enter product ID: ";
             cin >> id;
-            Node *temp = head;
+            node_product *temp = head;
             while (temp != nullptr)
             {
                 if (temp->product.idPoduct == id)
@@ -367,7 +383,7 @@ public:
             cout << "Enter product name: ";
             getline(cin, name);
             to_upper_case(name);
-            Node *temp = head;
+            node_product *temp = head;
             while (temp != nullptr)
             {
                 if (temp->product.nameProduct == name)
@@ -387,7 +403,7 @@ public:
             cout << "Enter product category: ";
             getline(cin, category);
             to_upper_case(category);
-            Node *temp = head;
+            node_product *temp = head;
             while (temp != nullptr)
             {
                 if (temp->product.catagory_product == category)

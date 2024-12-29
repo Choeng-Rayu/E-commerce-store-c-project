@@ -5,7 +5,6 @@
 #include<iomanip>
 #include<windows.h>
 #include<ctime>
-#include"product_data_class.h"
 #include"add_to_cart.h"
 
 using namespace std;
@@ -63,37 +62,6 @@ class Style{
         cout << "-  #5. Get report             -\n";
         cout << "-------------------------------\n";
         
-    }
-    void display_menu_at_search_product()
-    {
-        cout << "Please select option\n\n";
-        cout << "-------------------------------\n";
-        cout << "-  #1. search product by type.-\n";
-        cout << "-------------------------------\n";
-        cout << "-  #2. search product by ID.  -\n";
-        cout << "-------------------------------\n";
-        cout << "-  #3. Exit program.          -\n";
-        cout << "-------------------------------\n";
-        cout << "-  #4. Back to preavois.      -\n";
-        cout << "-------------------------------\n";
-    }
-    void display_menu_at_search_production_by_type()
-    {
-        cout << "Please select option\n\n";
-        cout << "-------------------------------\n";
-        cout << "-  #1. Shoes.                 -\n";
-        cout << "-------------------------------\n";
-        cout << "-  #2. Food.  -\n";
-        cout << "-------------------------------\n";
-        cout << "-  #3. closthes. -\n";
-        cout << "-------------------------------\n";
-        cout << "-  #4. vehicle.      -\n";
-        cout << "-------------------------------\n";
-        cout << "-  #5. Back to preavois.      -\n";
-        cout << "-------------------------------\n";
-        cout << "-  #6. Exit Program.      -\n";
-        cout << "-------------------------------\n";
-
     }
     //loading to data function
     void loading_style ()
@@ -256,37 +224,67 @@ int main ()
         cin >> opt;
         if(opt == 1)
         {
+            system("cls");
+            system("color 0b");
             while(back)
             {
-                back = false;
                 style.display_menu_customer();
-                switch (opt)
+                int opt_customer;
+                cout << "Enter your option: ";
+                cin >> opt_customer;
+                switch (opt_customer)
                 {
                     case 1:
                         system("cls");
                         system("color 0A");
                         {
-                            int id_product;
+                            int id_product, quantity;
                             cout << "Enter ID for add product to cart: " ;
                             cin >> id_product;
-                            product.search_product(id_product);
+                            cout << "Enter Amount for add to cart: ";
+                            cin >> quantity;
+                            cart.add_to_cart_data_transfer(id_product, quantity);
                         }
                         break;
-                    case 1:
+                    case 0:
+                        cout << "You are exited the program" << endl;
+                        exit(0);
                         break;
-                    case 1:
+                    case 2:
+                    {
+                        system("cls");
+                        system("color 0A");
+                        product.search_product();
+                    }
                         break;
-                    case 1:
+                    case 3:
+                        system("cls");
+                        system("color 0A");
+                        cart.display_product_in_cart();
                         break;
-                    case 1:
+                    case 4:
+                        system("cls");
+                        system("color 0A");
+                            cart.delete_product_in_cart();
                         break;
-                    case 1:
+                    case 5:
+                        system("cls");
+                        system("color 0A");
+                        //check profile
                         break;
-                    case 1:
+                    case 6:
+                        system("cls");
+                        system("color 0A");
+
                         break;
-                    case 1:
+                    case 7:
+                        system("cls");
+                        system("color 0A");
+                        back = false;
                         break;
-                    case 1:
+                    case 8:
+                        system("cls");
+                        system("color 0A");
                         break;
                     default:
                         break;
