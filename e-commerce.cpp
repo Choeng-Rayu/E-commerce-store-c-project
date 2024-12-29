@@ -253,6 +253,7 @@ class Product
         delete toDelete;
         size--;
         cout << "Product " << removedName << " deleted successfully." << endl;
+    }
     void buy_product(int price, string nameOFProduct, int amount, int dateOFbuying){
         Node* temp = new Node;
         temp->priceProduct = price;
@@ -272,7 +273,6 @@ class Product
             rear = temp;
         }
     }
-}
 };
 
 // class NST //search function
