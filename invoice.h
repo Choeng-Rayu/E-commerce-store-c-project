@@ -11,20 +11,20 @@ using namespace std;
 #define FILE_HISTORY "history data.csv" // store all the history of the customer
 #define FILE_INVOICE "Invoice data.csv" // store all the invoice of the customer
 
-struct Node
+struct node_invoice
 {
     string name;
     int id;
     float price;
     int amount;
     string type;
-    Node* next;
+    node_invoice* next;
     string date;
 };
 
 class Invoice
 {
-    Node* top;
+    node_invoice* top;
     int totalProduct;
     string invoice_id;
     string invoice_date;
@@ -50,7 +50,7 @@ class Invoice
     }
     ~Invoice() {
         while (top != nullptr) {
-            Node* temp = top;
+            node_invoice* temp = top;
             top = top->next;
             delete temp;
         }
@@ -58,7 +58,7 @@ class Invoice
 
     void product_add_to_invoice(string name, int id, float price, int amount, string type, string date)
     {
-        Node* newProduct = new Node;
+        node_invoice* newProduct = new node_invoice;
         newProduct->name = name;
         newProduct->id = id;
         newProduct->price = price;
@@ -94,7 +94,7 @@ class Invoice
             cout << "No product in history." << endl;
             return;
         }
-        Node* toDelete = top;
+        node_invoice* toDelete = top;
         cout<< "are you sure you want to delete the" << toDelete->name << "from history? (Y/N): ";
         string choice;
         if (choice == "Y" || choice == "y" || choice == "yes" || choice == "Yes" )
@@ -116,7 +116,7 @@ class Invoice
             cout << "No product in history." << endl;
             return;
         }
-        Node* temp = top;
+        node_invoice* temp = top;
         int count = 1;
         cout << "\n\t\t\t\t\t================ Invioce ================\n"; 
         cout << "No\tName\t\t\tCategory\t\tID\t\tPrice\t\tQuantity\tDate\n";
@@ -138,7 +138,7 @@ class Invoice
     }
     void save_inovice_to_file(){
         fstream file(FILE_INVOICE, ios::out);
-        Node* current = top;
+        node_invoice* current = top;
         file << "Name,Type,Date,ID,Price,Quantity" <<endl;
         while(current != nullptr){
             file << current->name <<","
@@ -199,7 +199,7 @@ class Invoice
     }
     void add_save_history_to_file(){
         fstream file(FILE_HISTORY, ios::app);
-        Node* temp = top;
+        node_invoice* temp = top;
         int count = 1;
         file << "\n\t\t\t\t\t================ Invioce ================\n"; 
         file << "No\tName\t\t\tCategory\t\tID\t\tPrice\t\tQuantity\tDate\n";
@@ -229,7 +229,8 @@ class Invoice
             << "5. Get Invoice\n"
             << "6. Display history\n"
             << "7. Save to invoice\n"
-            << "8. Save to invoice\n";
+            << "8. Save to invoice\n"
+            << "9. Back to previous\n";
     }
 
 };

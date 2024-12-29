@@ -12,6 +12,7 @@ using namespace std;
 #define FILE_PRODUCT_DATA "ProductdataClass.csv"
 #define MAX_QUANTITY 1000000 // Define a maximum quantity limit
 
+
 // cart
 struct Product_cart
 {
@@ -651,6 +652,28 @@ public:
             }
         } while (back);
     }
+    void generate_report()
+    {
+        int total_quantity = 0;
+        float total_money = 0.0;
+        node_product *temp = head;
+
+        // Iterate through the list and calculate totals
+        while (temp != nullptr)
+        {
+            total_quantity += temp->product.quantity_product;
+            total_money += temp->product.priceProduct * temp->product.quantity_product;
+            temp = temp->next;
+        }
+
+        // Display the report
+        cout << "------ Product Report ------\n";
+        cout << "Total Number of Products: " << total_quantity << "\n";
+        cout << "Total Money (Value of All Products in Stock): " << total_money << " USD\n";
+        cout << "----------------------------\n";
+    }
+
+
 };
 
 class add_to_cart {
@@ -758,7 +781,7 @@ private:
         }
 
         node_product* temp = p->head; // Start at the head of the linked list
-        Invoice invoice;
+        Invoice* invoice = new Invoice;
         while (temp != nullptr) {
             if (temp->product.idPoduct == id) { // Match found
                 if (temp->product.quantity_product >= quantity) { // Sufficient stock
@@ -770,7 +793,7 @@ private:
 
                     string date = getCurrentTime(); // Get the current date
                     add_product_to_cart(name, id, price, quantity, type, date); // Add product to cart
-                    invoice.product_add_to_invoice(name, id, price, quantity, type, date);
+                    invoice->product_add_to_invoice(name, id, price, quantity, type, date);
                     cout << "Product " << name << " added to cart.\n";
                     return; // Exit after adding to the cart
                 } else {

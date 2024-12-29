@@ -6,7 +6,6 @@
 #include<windows.h>
 #include<ctime>
 #include"add_to_cart.h"
-#include"invoice.h"
 
 using namespace std;
 
@@ -403,9 +402,10 @@ int main ()
                                 cart->displayMenu();
                                 cout << "Enter your choice: ";
                                 cin >> choice;
+                                bool back_invoice = true;
                                 switch (choice) {
                                     case 1: {
-                                        while (true) {
+                                        while (back_invoice) {
                                             int opt;
                                             cart->shoping_menu();
                                             cout << "Enter your choice: ";
@@ -467,6 +467,11 @@ int main ()
                                                     back_cart_management = false;
                                                     cout << " Your are backed to previouse!" << endl;
                                                     break;
+                                                case 8:
+                                                    system("cls");
+                                                    system("color 4");
+                                                    back_invoice = false;
+                                                break;
                                                 case 0: {
                                                     style.exit_program_style ();
                                                     cout << "Exit successfully." << endl;
@@ -585,6 +590,7 @@ int main ()
                         system("cls");
                         system("color 0A");  
                         //report
+                        product->generate_report();
                     break;
                     default:
                     cout << "Invalid input" << endl;

@@ -272,6 +272,36 @@ public:
             cerr << "Product with ID " << id << " not found in the list.\n";
         }
     }
+    void generate_report()
+    {
+        // Check if there are any products
+        if (!head)
+        {
+            cout << "No products available in the inventory.\n";
+            return;
+        }
+
+        // Generate the report heading
+        cout << "Product Inventory Report\n";
+        cout << "---------------------------------------------------------\n";
+        cout << "ID   | Name                       | Category     | Price   | Quantity\n";
+        cout << "---------------------------------------------------------\n";
+
+        // Loop through the linked list to display each product
+        node_product *temp = head;
+        while (temp != nullptr)
+        {
+            cout << temp->product.idPoduct << "   | "
+                << temp->product.nameProduct << "   | "
+                << temp->product.catagory_product << "   | $"
+                << temp->product.priceProduct << "   | "
+                << temp->product.quantity_product << "\n";
+            temp = temp->next;
+        }
+
+        cout << "---------------------------------------------------------\n";
+    }
+
 
     void delete_product_from_file(int id)
     {
