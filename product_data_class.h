@@ -43,6 +43,7 @@ private:
         cout << "5. Store All Products to File\n";
         cout << "6. Search Product\n";
         cout << "7. Exit\n";
+        cout << "8. Back to Previous\n";
         cout << "Enter your choice: ";
     }
 
@@ -407,6 +408,7 @@ public:
     void run()
     {
         int choice;
+        bool back = true;
         do
         {
             display_menu();
@@ -601,10 +603,15 @@ public:
                     cout << "Please save the products to the file before exiting.\n";
                 }
             }
+            else if(choice == 8)
+            {
+                back = false;
+                break;
+            }
             else
             {
                 cout << "Invalid choice. Please try again.\n";
             }
-        } while (true);
+        } while (back);
     }
 };

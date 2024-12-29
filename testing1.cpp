@@ -767,3 +767,40 @@ class seller_account
 };
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+void seller_customer_admin_asking()
+    {
+        char opt;
+        cout << "please choose option(only one letter): " << endl;
+        cout << "C. for Customer" << endl;
+        cout << "S. for Seller" << endl;
+        cout << "Enter your role: ";
+        cin >> opt;
+        switch (opt)
+        {
+        case 'c':
+        case 'C': 
+        system("cls");
+            customer.lock_reset_pw();
+            break;
+        case 'S':
+        case 's':
+            seller.lock_reset_pw();
+            break;
+        default:
+        cout << "invalid input" << endl;
+            break;
+        }
+    }

@@ -227,40 +227,40 @@ private:
 
     }
     void update_product_in_cart() {
-    int product_id;
-    cout << "Enter id product to update: ";
-    cin >> product_id;
-    string name_update;
-    if (head == nullptr) {
-        cout << "Cart is empty\n";
-        return;
-    }
-    Node* current = head;
-    bool found = false;
-    while (current != nullptr) {
-        if (current->product.idPoduct == product_id) {
-            found = true;
-            cout << "Product found in cart\n";
-            cout << "Product name: " << current->product.nameProduct << endl;
-            cout << "Product ID: " << current->product.idPoduct << endl;
-            cout << "Product Price: " << current->product.priceProduct << endl;
-            cout << "Product Amount: " << current->product.quantity_product << endl;
-            cout << "Product Type: " << current->product.catagory_product << endl;
-            cout << "Product Date: " << current->product.date << endl;
-            name_update = current->product.nameProduct;
-            cout << "Enter new Amount product: ";
-            cin >> current->product.quantity_product;
-            cout << "Product updated successfully\n";
-            break;
+        int product_id;
+        cout << "Enter id product to update: ";
+        cin >> product_id;
+        string name_update;
+        if (head == nullptr) {
+            cout << "Cart is empty\n";
+            return;
         }
-        current = current->next; // Move to the next node
+        Node* current = head;
+        bool found = false;
+        while (current != nullptr) {
+            if (current->product.idPoduct == product_id) {
+                found = true;
+                cout << "Product found in cart\n";
+                cout << "Product name: " << current->product.nameProduct << endl;
+                cout << "Product ID: " << current->product.idPoduct << endl;
+                cout << "Product Price: " << current->product.priceProduct << endl;
+                cout << "Product Amount: " << current->product.quantity_product << endl;
+                cout << "Product Type: " << current->product.catagory_product << endl;
+                cout << "Product Date: " << current->product.date << endl;
+                name_update = current->product.nameProduct;
+                cout << "Enter new Amount product: ";
+                cin >> current->product.quantity_product;
+                cout << "Product updated successfully\n";
+                break;
+            }
+            current = current->next; // Move to the next node
+        }
+        if (!found) {
+            cout << "Product not found in cart\n";
+        } else {
+            cout << "Product " << name_update << " updated in cart\n";
+        }
     }
-    if (!found) {
-        cout << "Product not found in cart\n";
-    } else {
-        cout << "Product " << name_update << " updated in cart\n";
-    }
-}
 
     
 
