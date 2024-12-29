@@ -107,7 +107,7 @@ class Style{
                 system("color f");
             }
         }
-        cout << "You login successfully!";
+        cout << "loading successfully!";
         Sleep(3000);
         system("cls");
     }
