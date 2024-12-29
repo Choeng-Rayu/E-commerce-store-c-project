@@ -272,116 +272,116 @@ class Product
             rear = temp;
         }
     }
+}
 };
 
-class NST //search function
-{
-    Node* root;
-    int total;
-    public:
-    NST(){
-        root = NULL;
-        total = 0;
-    }
-    void insert(int id){
-        root = insert_(root, id);
-    }
-    void insert(int id){
-        root = insert_(root, id);
-    }
-    void readFile(){
-        fstream file(FILE_PRODUCT, ios::in);
-        if (!file) {
-            cerr << "Error: Unable to open file " << FILE_PRODUCT << endl;
-            return;
-        }
-        int readIDFile;
-        while (file >> readIDFile) {
-            root = insert_(root, readIDFile);
-        }
-    void search_product_by_name(){
-        string SearchName;
-        cout<<"Enter the name of product that you want to search:"; cin>>SearchName;
-        Node* temp = root;
-        while (temp != NULL)
-        {
-            if (temp->nameProduct==SearchName)
-            {
-                cout<<"Product Name: "<<temp->nameProduct<<endl;
-                cout<<"Pruduct ID: "<<temp->idPoduct<<endl;
-                cout<<"Price of product: "<<temp->priceProduct<<endl;
-                cout<<"Type of product: "<<temp->typeProduct<<endl;
-                cout<<"Amount: "<<temp->amount<<endl;
-                return;  
-            }
-            temp = temp->next;
-        }
-        cout<<"Product not found!"<<endl;
-    }
-    void search_product_by_type(){
-        string SearchType;
-        cout<<"Enter the type of product that you want to search: ";cin>>SearchType;
-        Node* temp = root;
-        while (temp != NULL)
-        {
-            if (temp->typeProduct == SearchType)
-            {
-                cout<<"Product found: "<<temp->nameProduct<<endl;
-                cout<<"Type: "<<temp->typeProduct<<endl;
-                cout<<"Price of product: "<<temp->priceProduct<<endl;
-            }
-            temp = temp->next;
-        }
+// class NST //search function
+// {
+//     Node* root;
+//     int total;
+//     public:
+//     NST(){
+//         root = NULL;
+//         total = 0;
+//     }
+//     void insert(int id){
+//         root = insert_(root, id);
+//     }
+//     void insert(int id){
+//         root = insert_(root, id);
+//     }
+//     void readFile(){
+//         fstream file(FILE_PRODUCT, ios::in);
+//         if (!file) {
+//             cerr << "Error: Unable to open file " << FILE_PRODUCT << endl;
+//             return;
+//         }
+//         int readIDFile;
+//         while (file >> readIDFile) {
+//             root = insert_(root, readIDFile);
+//         }
+//     void search_product_by_name(){
+//         string SearchName;
+//         cout<<"Enter the name of product that you want to search:"; cin>>SearchName;
+//         Node* temp = root;
+//         while (temp != NULL)
+//         {
+//             if (temp->nameProduct==SearchName)
+//             {
+//                 cout<<"Product Name: "<<temp->nameProduct<<endl;
+//                 cout<<"Pruduct ID: "<<temp->idPoduct<<endl;
+//                 cout<<"Price of product: "<<temp->priceProduct<<endl;
+//                 cout<<"Type of product: "<<temp->typeProduct<<endl;
+//                 cout<<"Amount: "<<temp->amount<<endl;
+//                 return;  
+//             }
+//             temp = temp->next;
+//         }
+//         cout<<"Product not found!"<<endl;
+//     }
+//     void search_product_by_type(){
+//         string SearchType;
+//         cout<<"Enter the type of product that you want to search: ";cin>>SearchType;
+//         Node* temp = root;
+//         while (temp != NULL)
+//         {
+//             if (temp->typeProduct == SearchType)
+//             {
+//                 cout<<"Product found: "<<temp->nameProduct<<endl;
+//                 cout<<"Type: "<<temp->typeProduct<<endl;
+//                 cout<<"Price of product: "<<temp->priceProduct<<endl;
+//             }
+//             temp = temp->next;
+//         }
         
-    }
-    void search_product_by_price(){
-        int SearchPrice;
-        cout<<"Enter the price of product that you want to search: ";cin>>SearchPrice;
-        Node* temp = root;
-        while(temp != NULL)
-        {
-            if (temp->priceProduct == SearchPrice)
-            {
-                cout<<"Product Name: "<<temp->nameProduct<<endl;
-                cout<<"Price of product: "<<temp->priceProduct<<endl;
-            }
-            temp = temp->next;
-        }
-    }
-    void search_product_by_id(){
-        int SearchId;
-        cout<<"Enter the id of product that you want to search: ";cin>>SearchId;
-        Node* temp = root;
-        while (temp != NULL)
-        {
-            if (temp-> idPoduct==SearchId)
-            {
-                cout<<"Product Name: "<<temp->nameProduct<<endl;
-                cout<<"Price of product: "<<temp->priceProduct<<endl;
-                cout<<"ID of product: "<<temp->idPoduct<<endl;
-            }
-            temp= temp->next;   
-        }
+//     }
+//     void search_product_by_price(){
+//         int SearchPrice;
+//         cout<<"Enter the price of product that you want to search: ";cin>>SearchPrice;
+//         Node* temp = root;
+//         while(temp != NULL)
+//         {
+//             if (temp->priceProduct == SearchPrice)
+//             {
+//                 cout<<"Product Name: "<<temp->nameProduct<<endl;
+//                 cout<<"Price of product: "<<temp->priceProduct<<endl;
+//             }
+//             temp = temp->next;
+//         }
+//     }
+//     void search_product_by_id(){
+//         int SearchId;
+//         cout<<"Enter the id of product that you want to search: ";cin>>SearchId;
+//         Node* temp = root;
+//         while (temp != NULL)
+//         {
+//             if (temp-> idPoduct==SearchId)
+//             {
+//                 cout<<"Product Name: "<<temp->nameProduct<<endl;
+//                 cout<<"Price of product: "<<temp->priceProduct<<endl;
+//                 cout<<"ID of product: "<<temp->idPoduct<<endl;
+//             }
+//             temp= temp->next;   
+//         }
         
-    }
-    void search_product_by_amount(){
-        int SearchAmount;
-        cout<<"Enter the Amount of product that you want to search: ";cin>>SearchAmount;
-        Node* temp = root;
-        while (temp != NULL)
-        {
-            if (temp->amount == SearchAmount)
-            {
-                cout<<"Product Name: "<<temp->nameProduct<<endl;
-                cout<<"Price of product: "<<temp->priceProduct<<endl;
-                cout<<"ID of product: "<<temp->idPoduct<<endl;
-                cout<<"Quantity of product: "<<temp->amount<<endl;
-            }
-            temp = temp->next;   
-        }
+//     }
+//     void search_product_by_amount(){
+//         int SearchAmount;
+//         cout<<"Enter the Amount of product that you want to search: ";cin>>SearchAmount;
+//         Node* temp = root;
+//         while (temp != NULL)
+//         {
+//             if (temp->amount == SearchAmount)
+//             {
+//                 cout<<"Product Name: "<<temp->nameProduct<<endl;
+//                 cout<<"Price of product: "<<temp->priceProduct<<endl;
+//                 cout<<"ID of product: "<<temp->idPoduct<<endl;
+//                 cout<<"Quantity of product: "<<temp->amount<<endl;
+//             }
+//             temp = temp->next;   
+//         }
         
-    }
-};
+//     };
 
 class File_handling
 {
@@ -757,8 +757,6 @@ class AddToCart
 
 class CustomerLogin
 {
-    Login customer;
-    File_handling file_user;
     public: 
     void lock_program()
     {
@@ -912,8 +910,6 @@ class CustomerLogin
 };
 class SellerLogin
 {
-    Login seller;
-    File_handling file_user;
     public: 
     void lock_program()
     {
