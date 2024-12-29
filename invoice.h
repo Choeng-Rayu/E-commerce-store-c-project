@@ -222,9 +222,9 @@ class Invoice
     }
     void displau_menu_invoice(){
         cout << "0. Exit\n"
-            << "1. Display invoice\n"
-            << "2. Add product to invoice\n"
-            << "3. Remove product from invoice\n"
+            << "1. Add product from invoice\n"
+            << "2. Remove product from invoice\n"
+            << "3. Display invoice\n"
             << "4. Save to history\n"
             << "5. Get Invoice\n"
             << "6. Display history\n"

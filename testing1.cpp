@@ -1,110 +1,312 @@
-#include<iostream>
-#include<fstream>
-#include<sstream>
-#include<string>
-#include<iomanip>
-#include<windows.h>
-#include<ctime>
-
-using namespace std;
-
-#define FILE_HISTORY "history data.csv" // store all the history of the customer
-#define FILE_INVOICE "Invoice data.csv" // store all the invoice of the customer
-#define FILE_PRODUCT "product data.csv" // store all the product
-#define FILE_PERSONAL "personal customer.csv" // store all the personal information of the customer
-#define FILE_USER_LOGIN "user login.csv" // store all the login information of the customer
-#define FILE_SELLER_LOGIN "seller login.csv" // store all the login information of the seller
-#define FILE_Add_TO_CART "add to cart.csv" // store all the product that the customer add to cart
-#define FILE_BUY_NOW "buy now.csv" // store all the product that the customer buy now
-#define FILE_PERSONAL_SELLER "personal seller.csv" // store all the personal information of the seller
-
-
-struct Node
+class CustomerLogin
 {
-    Node* left; //for BST
-    Node* right;//for BST
-    Node* next; //for linked list
-
-    // PRODUCT 
-    struct Product
+    public: 
+    void lock_program()
     {
-        string nameProduct;
-        int idPoduct;
-        int priceProduct;
-        int quantity_product;
-        string catagory_product;
-    };
+        string user_input_password;
+        string user_name_input;
+        string user_email_input;
+        int found = 0;
+        bool correct = false;
+        //file_user.readFile_user_login();
+        
+        system("color c");
+        for (int j = 0; j < 4; j++)
+        {
+            found ++;
+            if ( found == 4)
+            {
+                cout << "Access denied. Program will terminate.\n";
+                exit(1); // Terminates the program if password is incorrect three times
+            }
+            cout << "Please enter customer name: ";
+        // cin >> user_name_input;
+            cin.ignore();
+            getline(cin, user_name_input);
+
+            cout << "Please enter email: ";
+            cin >> user_email_input;
+            cout << "Please enter password: ";
+            cin >> user_input_password;
+            if ( user_name_input == customer.usernameCustomer  && user_input_password == customer.pwCustomer && user_email_input == customer.emailCustomer )
+            {
+                correct = true;
+                system("cls");
+                //cout << "Access granted!\n";
+                break;
+            }
+            if ( !correct )
+            {
+                system("cls");
+                cout << "Invalid  user name or password!\n";
+            }
+        }
+    }
+
+    void reset_pw()
+    {
+        system ("color d");
+        cout << "Enter new user name: ";
+        cin.ignore();
+        getline(cin, customer.usernameCustomer);
+        cout << "Enter new email: ";
+        cin >> customer.emailCustomer;
+        cout << "Enter new password: ";
+        cin.ignore();
+        getline(cin, customer.pwCustomer);
+        file_user.writeFile_user_login(customer.usernameCustomer, customer.emailCustomer, customer.pwCustomer);
+
+    }
+
+    void lock_reset_pw ()
+    {
+        int num;
+        char login_choice;
+        char letter;
+
+        system ("color B");
+        cout << "\n                   \t\t***************************************************************\n";
+        cout << "                   \t\t************** Welcome to E-Commerce store *********************\n";
+        cout << "                   \t\t***************************************************************\n\n";
+        cout << " Press Enter to continue...";
+        fflush (stdin);
+        cin.ignore();
+        system("cls");
+        system ("color 3");
+        cout << "Note" << endl;
+        cout << "W. For Enter user name and password" << endl;
+        cout << "F. For forget password" << endl;
+        cout << "Please your choice: ";
+        cin >> login_choice;
+
+        system ("cls");
+        switch ( login_choice )
+        {
+            //choice_convert = atoi (password_choice);
+            case 'W':
+            case 'w':
+                lock_program();
+                break;
+
+            case 'F':
+            case 'f':
+                //int num;
+                system ("color 4");
+                cout << "Question 1: what number did you like?" << endl;
+                cout << "Answer here: ";
+                cin >> num;
+                system ("cls");
+                switch( num )
+                {
+                case 1:
+                    system ("color 5");
+                    cout << "Question 2: Which letter you like the most?" << endl;
+                    cout << "Answer here: ";
+                    cin >> letter;
+                    system ("cls");
+                    switch( letter )
+                    {
+
+                        case 'z':
+                        {
+                            system ("color 6");
+                            float x1,x2;
+                            cout << "The last question" << endl;
+                            cout << "solve this equation: 2X^2 - 5X + 3 = 0" << endl;
+                            cout << "Answer here:" << endl;
+                            cout << "X1 = ";
+                            cin >> x1;
+                            cout << "X2 = ";
+                            cin >> x2;
+                            system ("cls");
+                            if ( (x1 == 1 && x2 == 1.5) || (x2 == 1 && x1 == 1.5 ))
+                            {
+                                system ("color 7");
+                                cout << "You are correct!" << endl;
+                                reset_pw();
+                            }
+                            else
+                            {
+                                system ("color 7");
+                                cout << "You were wrong!" << endl;
+                                exit (1);
+                            }
+                        }
+                            break;
+                        default:
+                            cout << "You're wrong!" <<endl;
+                            exit(1); //end the program
+                    }
+
+                    break;
+                default:
+                    cout << "You're wrong!" <<endl;
+                    exit(1); //end the program
+                }
+                break;
+            default:
+                cout << "Invalid input" << endl;
+                exit(1);
+        }
+    }
+
+};
+class SellerLogin
+{
+    public: 
+    void lock_program()
+    {
+        string seller_input_password;
+        string seller_name_input;
+        string seller_email_input;
+        int found = 0;
+        bool correct = false;
+        file_user.readFile_seller_login();
+        system("color c");
+        for (int j = 0; j < 4; j++)
+        {
+            found ++;
+            if ( found == 4)
+            {
+                cout << "Access denied. Program will terminate.\n";
+                exit(1); // Terminates the program if password is incorrect three times
+            }
+            cout << "Please enter seller name: ";
+        // cin >> user_name_input;
+            cin.ignore();
+            getline(cin, seller_name_input);
+
+            cout << "Please enter email: ";
+            cin >> seller_email_input;
+            cout << "Please enter password: ";
+            cin >> seller_email_input;
+            if ( seller_name_input == seller.usernameseller  && seller_input_password == seller.pwseller && seller_email_input == seller.emailseller )
+            {
+                correct = true;
+                system("cls");
+                //cout << "Access granted!\n";
+                break;
+            }
+            if ( !correct )
+            {
+                system("cls");
+                cout << "Invalid  user name or password!\n";
+            }
+        }
+    }
+
+    void reset_pw()
+    {
+        system ("color d");
+        cout << "Enter new user name: ";
+        cin.ignore();
+        getline(cin, seller.usernameseller);
+        cout << "Enter new email: ";
+        cin >> seller.emailseller;
+        cout << "Enter new password: ";
+        cin.ignore();
+        getline(cin, seller.pwseller);
+        file_user.writeFile_seller_login(seller.usernameseller, seller.emailseller, seller.pwseller);
+        system("cls");
+
+    }
+
+    void lock_reset_pw ()
+    {
+        int num;
+        char login_choice;
+        char letter;
+
+        system ("color B");
+        cout << "\n                   \t\t***************************************************************\n";
+        cout << "                   \t\t************** Welcome to E-Commerce store *********************\n";
+        cout << "                   \t\t***************************************************************\n\n";
+        cout << " Press Enter to continue...";
+        fflush (stdin);
+        cin.ignore();
+        system("cls");
+        system ("color 3");
+        cout << "Note" << endl;
+        cout << "W. For Enter user name and password" << endl;
+        cout << "F. For forget password" << endl;
+        cout << "Please your choice: ";
+        cin >> login_choice;
+
+        system ("cls");
+        switch ( login_choice )
+        {
+            //choice_convert = atoi (password_choice);
+            case 'W':
+            case 'w':
+                lock_program();
+                break;
+
+            case 'F':
+            case 'f':
+                //int num;
+                system ("color 4");
+                cout << "Question 1: what number did you like?" << endl;
+                cout << "Answer here: ";
+                cin >> num;
+                system ("cls");
+                switch( num )
+                {
+                case 1:
+                    system ("color 5");
+                    cout << "Question 2: Which letter you like the most?" << endl;
+                    cout << "Answer here: ";
+                    cin >> letter;
+                    system ("cls");
+                    switch( letter )
+                    {
+
+                        case 'z':
+                        {
+                            system ("color 6");
+                            float x1,x2;
+                            cout << "The last question" << endl;
+                            cout << "solve this equation: 2X^2 - 5X + 3 = 0" << endl;
+                            cout << "Answer here:" << endl;
+                            cout << "X1 = ";
+                            cin >> x1;
+                            cout << "X2 = ";
+                            cin >> x2;
+                            system ("cls");
+                            if ( (x1 == 1 && x2 == 1.5) || (x2 == 1 && x1 == 1.5 ))
+                            {
+                                system ("color 7");
+                                cout << "You are correct!" << endl;
+                                reset_pw();
+                            }
+                            else
+                            {
+                                system ("color 7");
+                                cout << "You were wrong!" << endl;
+                                exit (1);
+                            }
+                        }
+                            break;
+                        default:
+                            cout << "You're wrong!" <<endl;
+                            exit(1); //end the program
+                    }
+
+                    break;
+                default:
+                    cout << "You're wrong!" <<endl;
+                    exit(1); //end the program
+                }
+                break;
+            default:
+                cout << "Invalid input" << endl;
+                exit(1);
+        }
+    }
     
-    //customer personal data & login
 
-    struct Customer
-    {
-        string name_customer;
-        string password_customer;
-        string email_customer;
-        int id_customer;
-        string phone_customer;
-        int money_customer;
-    }customer;
-    
-    //seller personal data & login
-    struct Seller
-    {
-        string username_seller;
-        string password_seller;
-        string email_seller;
-        int id_seller;
-        string phone_seller;
-        int money_seller;
-    }seller;
-
-    //add to cart
-    struct Add_to_cart
-    {
-        string nameProduct_cart;
-        int idPoduct_cart;
-        int priceProduct_cart;
-        int quantity_product_cart;
-        string catagory_product_cart;
-        int total_price_cart;
-    }add_to_cart;
-
-
-    //admin personal data & login
-    struct Admin
-    {
-        string username_admin;
-        string password_admin;
-        string email_admin;
-    }addmin;
-
-    //date
-    struct Date
-    {
-        int year;
-        int month;
-        int days;
-    }date;
 };
 
-// class date_handling
-// {
-//     Node::Date date;
-//     public:
-//     void get_date(){
-//         time_t now = time(0);
-//         tm* ltm = localtime(&now);
-//         date.year = 1900 + ltm->tm_year;
-//         date.month = 1 + ltm->tm_mon;
-//         date.days = ltm->tm_mday;
-//     }
 
-// };
-
-// class Admine
-// {
-
-// };
 
 class customer_account 
 {
@@ -112,7 +314,7 @@ class customer_account
     Node* head;
     Node* tail;
 
-    public:
+public:
     customer_account() {
         total_customer = 0;
         head = nullptr;
@@ -128,6 +330,7 @@ class customer_account
             delete toDelete;
         }
     }
+
     void add_customer_input_data(){
         string name, email, phone, password;
         int money, id;
@@ -152,10 +355,9 @@ class customer_account
         cin.ignore();
         getline(cin, password);
         insert_customer(name, email, phone, password, id, money);
-
     }
-    void insert_customer(string name, string email, string phone,string password,  int id, int money) { 
 
+    void insert_customer(string name, string email, string phone, string password, int id, int money) { 
         Node* newCustomer = new Node;
         newCustomer->customer.name_customer = name;
         newCustomer->customer.email_customer = email;
@@ -173,6 +375,7 @@ class customer_account
         }
         total_customer++;
     }
+
     void load_data_from_file(){
         fstream file(FILE_PERSONAL, ios::in);
         if (!file.is_open()) return;
@@ -199,7 +402,7 @@ class customer_account
         fstream file(FILE_PERSONAL, ios::out);
         if (!file.is_open()) return;
         Node* current = head;
-        file << "Name,Email,Phone,Password,Id,Money" << endl;//skip the header line
+        file << "Name,Email,Phone,Password,Id,Money" << endl; // Write the header line
         while (current)
         {
             file << current->customer.name_customer << ","
@@ -215,16 +418,10 @@ class customer_account
     }
 
     bool check_customer_is_empty(){
-        if(total_customer == 0){
-            return true;
-        }
-        return false;
+        return total_customer == 0;
     }
 
     void delete_customer(string name, string password) {
-        string name;
-        string password;
-
         if (check_customer_is_empty()) {
             cout << "There is no customer account" << endl;
             return;
@@ -235,17 +432,16 @@ class customer_account
 
         while (current != nullptr) {
             if (current->customer.name_customer == name && current->customer.password_customer == password) {
-                
                 delete_customer = current;
 
                 // Display customer details
                 cout << "Customer details:" << endl;
                 cout << "Name: " << current->customer.name_customer << endl
-                    << "ID: " << current->customer.id_customer << endl
-                    << "Email: " << current->customer.email_customer << endl
-                    << "Phone: " << current->customer.phone_customer << endl
-                    << "Money: " << current->customer.money_customer << endl
-                    << "Password: " << current->customer.password_customer << endl;
+                     << "ID: " << current->customer.id_customer << endl
+                     << "Email: " << current->customer.email_customer << endl
+                     << "Phone: " << current->customer.phone_customer << endl
+                     << "Money: " << current->customer.money_customer << endl
+                     << "Password: " << current->customer.password_customer << endl;
 
                 cout << "Please press Enter to delete..." << endl;
                 cin.ignore();
@@ -283,7 +479,7 @@ class customer_account
             return;
         }
 
-        cout << "Enter Customer name you want to delete: ";
+        cout << "Enter Customer name you want to update: ";
         cin.ignore();
         getline(cin, name);
         cout << "Enter Password: ";
@@ -294,11 +490,11 @@ class customer_account
                 // Display customer details
                 cout << "Customer details:" << endl;
                 cout << "Name: " << current->customer.name_customer << endl
-                    << "ID: " << current->customer.id_customer << endl
-                    << "Email: " << current->customer.email_customer << endl
-                    << "Phone: " << current->customer.phone_customer << endl
-                    << "Money: " << current->customer.money_customer << endl
-                    << "Password: " << current->customer.password_customer << endl;
+                     << "ID: " << current->customer.id_customer << endl
+                     << "Email: " << current->customer.email_customer << endl
+                     << "Phone: " << current->customer.phone_customer << endl
+                     << "Money: " << current->customer.money_customer << endl
+                     << "Password: " << current->customer.password_customer << endl;
                 cout << "Enter new name: ";
                 cin.ignore();
                 getline(cin, current->customer.name_customer);
@@ -308,23 +504,25 @@ class customer_account
                 cin.ignore();
                 getline(cin, current->customer.phone_customer);
                 cout << "Enter new money: ";
-                cin >>current->customer.money_customer;
-                cout << "Enter new Id:";
+                cin >> current->customer.money_customer;
+                cout << "Enter new Id: ";
                 cin >> current->customer.id_customer;
                 cout << "Enter new password: ";
                 cin.ignore();
                 getline(cin, current->customer.password_customer);
                 cout << "Customer updated successfully!" << endl;
-                break;
+                return;
             }
             current = current->next;
         }
 
         cout << "Customer not found!" << endl;
     }
+
     int get_total_customer(){
         return total_customer;
     }
+
     void display_customer(){
         if (check_customer_is_empty()) {
             cout << "There is no customer account" << endl;
@@ -333,16 +531,16 @@ class customer_account
         Node* current = head;
         while (current != nullptr) {
             cout << "Name: " << current->customer.name_customer << " "
-                << "ID: " << current->customer.id_customer << " "
-                << "Email: " << current->customer.email_customer << " "
-                << "Phone: " << current->customer.phone_customer << " "
-                << "Money: " << current->customer.money_customer << " "
-                << "Password: " << current->customer.password_customer << endl;
+                 << "ID: " << current->customer.id_customer << " "
+                 << "Email: " << current->customer.email_customer << " "
+                 << "Phone: " << current->customer.phone_customer << " "
+                 << "Money: " << current->customer.money_customer << " "
+                 << "Password: " << current->customer.password_customer << endl;
             current = current->next;
         }
     }
-
 };
+
 
 
 class seller_account
@@ -569,84 +767,3 @@ class seller_account
 };
 
 
-// class BST_for_customer
-// {
-//     Node* root;
-//     BST_for_customer(){
-//         root = NULL;
-//     }
-//     ~BST_for_customer(){
-
-//     }
-    
-// };
-// class BST_for_seller
-// {
-//     Node* root;
-//     BST_for_customer(){
-//         root = NULL;
-//     }
-//     ~BST_for_customer(){
-
-//     }
-    
-// };
-// class BST_for_product
-// {
-//     Node* root;
-//     BST_for_customer(){
-//         root = NULL;
-//     }
-//     ~BST_for_customer(){
-x
-//     }
-    
-// };
-
-
-// class product_data
-// {
-//     Node* head;
-//     Node* tail;
-//     int total_product;
-//     product_data(){
-//         head = NULL;
-//         tail = NULL;
-//         total_product = 0;
-//     }
-//     ~product_data(){
-
-//     }
-// };
-
-// class add_to_cart
-// {
-//     Node* head;
-//     Node* tail;
-//     int total_product_add_to_cart;
-//     add_to_cart(){
-//         head = NULL;
-//         tail = NULL;
-//         total_product_add_to_cart = 0;
-
-//     }
-
-//     ~add_to_cart(){
-
-
-//     }
-
-// };
-
-
- main ()
-{
-    customer_account customer;
-    seller_account seller;
-    customer.load_data_from_file();
-    customer.display_customer();
-    customer.add_customer_input_data();
-    customer.save_data_to_file();
-    customer.display_customer();
-    return 0;
-}
