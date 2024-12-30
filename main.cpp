@@ -412,23 +412,17 @@ int main ()
                                             cin >> opt;
                                             switch (opt) {
                                                 case 1: {
-                                                    system("cls");
-                                                    string name, type;
-                                                    int id, amount;
-                                                    float price;
-                                                    cout << "Enter Name product: ";
-                                                    cin.ignore();
-                                                    getline(cin, name);
-                                                    cout << "Enter ID product: ";
-                                                    cin >> id;
-                                                    cout << "Enter Price product: ";
-                                                    cin >> price;
-                                                    cout << "Enter Amount product: ";
-                                                    cin >> amount;
-                                                    cout << "Enter Type product: ";
-                                                    cin.ignore();
-                                                    getline(cin, type);
-                                                    cart->add_product_to_cart(name, id, price, amount, type, cart->getCurrentTime());
+                                                    system("cls");                                               
+                                                    system("color 0A");
+                                                {
+                                                    int id_product, quantity;
+                                                    cout << "Enter ID for add product to cart: " ;
+                                                    cin >> id_product;
+                                                    cout << "Enter Amount for add to cart: ";
+                                                    cin >> quantity;
+                                                    cart->add_to_cart_data_transfer( product, id_product, quantity);
+                    
+                                                }
                                                     break;
                                                 }
                                                 case 2: {
@@ -453,6 +447,8 @@ int main ()
                                                     system("cls");
                                                     system("color 6");
                                                     cart->pay_money();
+                                                    invoice->getCurrentTime_for_generate_invioce();
+                                                    invoice->add_save_history_to_file();
                                                     break;
                                                 }
                                                 case 6: {
@@ -535,6 +531,11 @@ int main ()
                                         cart->save_cart_to_file();
                                         break;
                                     }
+                                    case 9:
+                                        system("cls");
+                                        system("color a");
+                                        back_cart_management = false;
+                                        break;
                                     default: {
                                         cout << "Invalid choice." << endl;
                                         break;

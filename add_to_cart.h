@@ -3,7 +3,6 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
-#include "invoice.h"
 using namespace std;
 
 #define FILE_BUY_NOW "buy_now.csv"  // store all the buy now of the customer
@@ -11,6 +10,22 @@ using namespace std;
 //PRODUCT DATA
 #define FILE_PRODUCT_DATA "ProductdataClass.csv"
 #define MAX_QUANTITY 1000000 // Define a maximum quantity limit
+//invoice
+#define FILE_HISTORY "history data.csv" // store all the history of the customer
+#define FILE_INVOICE "Invoice data.csv" // store all the invoice of the customer
+
+struct node_invoice
+{
+    string name;
+    int id;
+    float price;
+    int amount;
+    string type;
+    node_invoice* next;
+    string date;
+};
+
+
 
 
 // cart
@@ -49,6 +64,222 @@ struct node_product
 {
     Product product;
     node_product *next;
+};
+
+
+//invoice
+
+class Invoice
+{
+    node_invoice* top;
+    int totalProduct;
+    string invoice_id;
+    string invoice_date;
+    public:
+    string getCurrentTime() {
+
+        // Get the current time
+        time_t t = time(nullptr); 
+        tm* now = localtime(&t);
+
+        // Format the time into a string
+        char buffer[100];
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", now);
+
+        return string(buffer);
+    }
+    Invoice()
+    {
+        top = NULL;
+        totalProduct = 0;
+        invoice_date = getCurrentTime();
+        invoice_id = "Unknow";
+    }
+    ~Invoice() {
+        while (top != nullptr) {
+            node_invoice* temp = top;
+            top = top->next;
+            delete temp;
+        }
+    }
+
+    void product_add_to_invoice(string name, int id, float price, int amount, string type, string date)
+    {
+        node_invoice* newProduct = new node_invoice;
+        newProduct->name = name;
+        newProduct->id = id;
+        newProduct->price = price;
+        newProduct->amount = amount;
+        newProduct->type = type;
+        newProduct->date = date;
+        if (totalProduct == 0)
+        {
+            top = newProduct;
+        }
+        else
+        {
+            newProduct->next = top;
+            top = newProduct;
+        }
+        totalProduct++;
+    }
+    string getCurrentTime_for_generate_invioce() {
+
+        // Get the current time
+        time_t t = time(nullptr); 
+        tm* now = localtime(&t);
+
+        // Format the time into a string
+        char buffer[100];
+        strftime(buffer, 100, "%Y-%m-%d %H:%M:%S", now);
+        return string(buffer);
+    }
+    void delete_product_from_invoice()
+    {
+        if (totalProduct == 0)
+        {
+            cout << "No product in history." << endl;
+            return;
+        }
+        node_invoice* toDelete = top;
+        cout<< "are you sure you want to delete the" << toDelete->name << "from history? (Y/N): ";
+        string choice;
+        if (choice == "Y" || choice == "y" || choice == "yes" || choice == "Yes" )
+        {
+            top = top->next;
+            delete toDelete;
+            totalProduct--;
+            cout << "Product " << top->name << " deleted successfully." << endl;
+        }
+        else
+        {
+            cout << "Product " << top->name << " not deleted." << endl;
+        }
+    }
+    void display_product_in_invoice()
+    {
+        if (totalProduct == 0)
+        {
+            cout << "No product in history." << endl;
+            return;
+        }
+        node_invoice* temp = top;
+        int count = 1;
+        cout << "\n\t\t\t\t\t================ Invioce ================\n"; 
+        cout << "No\tName\t\t\tCategory\t\tID\t\tPrice\t\tQuantity\tDate\n";
+        while (temp != nullptr) {
+            cout << count << "\t"
+                << setw(20) << left << temp->name << "\t"
+                << setw(20) << left << temp->type << "\t"
+                << setw(10) << left << temp->id << "\t"
+                << setw(10) << left << temp->price << "\t"
+                << setw(10) << left << temp->amount << "\t"
+                << temp->date << "\n";
+            temp = temp->next;
+            count++;
+        }
+        cout << "Total product in cart: " << totalProduct << endl;
+        cout << "Invoice Date: " << invoice_date << endl;
+        cout << "Invoice ID: " << invoice_id << endl;
+        cout << "\t\t\t\t\t==========================================\n";
+    }
+    void save_inovice_to_file(){
+        fstream file(FILE_INVOICE, ios::out);
+        node_invoice* current = top;
+        file << "Name,Type,Date,ID,Price,Quantity" <<endl;
+        while(current != nullptr){
+            file << current->name <<","
+                 << current->type << ","
+                 << current->date <<","
+                 << current->id << ","
+                 << current->price << ","
+                 << current->amount << endl;
+            current = current->next;
+        }
+    }
+    void load_invoice_from_file(){
+        ifstream file;
+        file.open(FILE_INVOICE);
+        if (!file.is_open()) {
+            cerr << "Error: Could not open file.\n";
+            return;
+        }
+
+        string name, category, date;
+        int id, quantity;
+        float price;
+        string line;
+        string skip_line;
+        getline(file, skip_line); // Skip the first line
+        if (file.is_open()) {
+            while (getline(file, line)) {
+                stringstream ss(line);
+                getline(ss, name, ',');
+                getline(ss, category, ',');
+                getline(ss, date, ',');
+                ss >> id;
+                ss.ignore(1, ','); // Ignore the comma
+                ss >> price;
+                ss.ignore(1, ','); // Ignore the comma
+                ss >> quantity;
+                product_add_to_invoice(name, id, price, quantity, category, date);
+            }
+            file.close();
+        } else {
+            cerr << "Unable to open file for reading.\n";
+        }
+    }
+    int get_total_product(){
+        return totalProduct;
+    }
+    void display_history_of_customer_from_file(){
+        fstream file(FILE_HISTORY, ios::in);
+        if (!file.is_open()) {
+            cerr << "Error: Could not open file.\n";
+            return;
+        }
+
+        string line;
+        while(getline(file, line)){
+            cout << line << endl;
+        }
+    }
+    void add_save_history_to_file(){
+        fstream file(FILE_HISTORY, ios::app);
+        node_invoice* temp = top;
+        int count = 1;
+        file << "\n\t\t\t\t\t================ Invioce ================\n"; 
+        file << "No\tName\t\t\tCategory\t\tID\t\tPrice\t\tQuantity\tDate\n";
+        while (temp != nullptr) {
+            file << count << "\t"
+                << setw(20) << left << temp->name << "\t"
+                << setw(20) << left << temp->type << "\t"
+                << setw(10) << left << temp->id << "\t"
+                << setw(10) << left << temp->price << "\t"
+                << setw(10) << left << temp->amount << "\t"
+                << temp->date << "\n";
+            temp = temp->next;
+            count++;
+        }
+        file << "Total product in cart: " << totalProduct << endl;
+        file << "Invoice Date: " << invoice_date << endl;
+        file << "Invoice ID: " << invoice_id << endl;
+        file << "\t\t\t\t\t==========================================\n";
+        file << "Save to file successfully" << endl;
+    }
+    void displau_menu_invoice(){
+        cout << "0. Exit\n"
+            << "1. Add product from invoice\n"
+            << "2. Remove product from invoice\n"
+            << "3. Display invoice\n"
+            << "4. Save to history\n"
+            << "5. Get Invoice\n"
+            << "6. Display history of invoice\n"
+            << "7. Save to invoice\n"
+            << "8. Back to previous\n";
+
+    }
+
 };
 
 class ProductManager
@@ -692,6 +923,7 @@ private:
         cout << "6. Check Your profile\n";
         cout << "7. Edit Your product in cart\n";
         cout << "8. Save your cart to file\n";
+        cout << "9. Save your cart to file\n";
     }
     void shoping_menu(){
         cout << "0. Exit\n";

@@ -3,3 +3,43 @@ ROD,FIX,3,30,550
 TIGER,TOY,4,7,70
 CLAY,TOY,8,2,90
 YOYO,TOY,9,1.9,800
+Wooden Chair,HouseMaterial,101,120,10
+Wooden Table,HouseMaterial,102,150,10
+Metal Shelf,HouseMaterial,103,200,10
+Curtains,HouseMaterial,104,80,10
+Wall Clock,HouseMaterial,105,50,10
+Carpet,HouseMaterial,106,100,10
+Bookshelf,HouseMaterial,107,300,10
+Ceiling Fan,HouseMaterial,108,250,10
+Lamp,HouseMaterial,109,60,10
+Sofa,HouseMaterial,110,500,10
+Laptop,Electronic,111,1000,10
+Smartphone,Electronic,112,500,10
+Tablet,Electronic,113,300,10
+Television,Electronic,114,700,10
+Headphones,Electronic,115,80,10
+Smartwatch,Electronic,116,200,10
+Bluetooth Speaker,Electronic,117,150,10
+Game Console,Electronic,118,400,10
+Keyboard,Electronic,119,50,10
+Mouse,Electronic,120,30,10
+Teddy Bear,Toy,121,25,10
+Action Figure,Toy,122,20,10
+Puzzle,Toy,123,15,10
+Toy Car,Toy,124,30,10
+Doll,Toy,125,40,10
+Board Game,Toy,126,50,10
+Rubik's Cube,Toy,127,10,10
+Building Blocks Set,Toy,128,35,10
+Stuffed Animal,Toy,129,25,10
+Toy Drone,Toy,130,100,10
+Toothpaste,Necessity,131,3,10
+Soap,Necessity,132,2,10
+Shampoo,Necessity,133,5,10
+Toilet Paper,Necessity,134,1,10
+Sanitizer,Necessity,135,4,10
+Laundry Detergent,Necessity,136,6,10
+Dishwashing Liquid,Necessity,137,3,10
+Hand Wash,Necessity,138,2,10
+Face Mask,Necessity,139,10,10
+Bandages,Necessity,140,2,10
