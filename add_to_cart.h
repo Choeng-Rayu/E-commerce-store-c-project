@@ -585,7 +585,7 @@ public:
         // }
         node_product* temp = head;
         int count = 1;
-        cout << "\n\t\t\t\t\t================ Pre-Pay ================\n"; 
+        cout << "\n\t\t\t\t\t================ All Product ================\n"; 
         cout << "No\tName\t\t\tCategory\t\tID\t\tPrice\t\tQuantity\tDate\n";
         while (temp != nullptr) {
             cout << count << "\t"

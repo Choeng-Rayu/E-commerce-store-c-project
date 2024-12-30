@@ -758,6 +758,7 @@ class AddToCart
 class CustomerLogin
 {
     public: 
+    
     void lock_program()
     {
         string user_input_password;
@@ -766,7 +767,7 @@ class CustomerLogin
         cout << "data in lock program" << customer.usernameCustomer << " " << customer.emailCustomer << " " << customer.pwCustomer  << endl;
         int found = 0;
         bool correct = false;
-        file_user.readFile_user_login();
+        readFile_user_login();
         system("color c");
         for (int j = 0; j < 4; j++)
         {
