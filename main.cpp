@@ -235,7 +235,8 @@ int main ()
         {
             system("cls");
             system("color 0b");
-            while(back)
+            bool back1 = true;
+            while(back1)
             {
                 style.display_menu_customer();
                 int opt_customer;
@@ -380,7 +381,7 @@ int main ()
                     case 7:
                         system("cls");
                         system("color 0A");
-                        back = false;
+                        back1 = false;
                         break;
                     case 8:
                         system("cls");
