@@ -240,6 +240,7 @@ int main ()
             bool back1 = true;
             while(back1)
             {
+                product->display_products();
                 style.display_menu_customer();
                 int opt_customer;
                 cout << "Enter your option: ";
