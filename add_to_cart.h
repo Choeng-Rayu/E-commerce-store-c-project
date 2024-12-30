@@ -574,14 +574,28 @@ public:
 
     void display_products()
     {
-        cout << "Products in list:\n";
-        node_product *temp = head;
-        while (temp != nullptr)
-        {
-            cout << "Name: " << temp->product.nameProduct << ", Category: " << temp->product.catagory_product
-                 << ", ID: " << temp->product.idPoduct << ", Price: " << temp->product.priceProduct
-                 << ", Quantity: " << temp->product.quantity_product << "\n";
+        // cout << "Products in list:\n";
+        // node_product *temp = head;
+        // while (temp != nullptr)
+        // {
+        //     cout << "Name: " << temp->product.nameProduct << ", Category: " << temp->product.catagory_product
+        //          << ", ID: " << temp->product.idPoduct << ", Price: " << temp->product.priceProduct
+        //          << ", Quantity: " << temp->product.quantity_product << "\n";
+        //     temp = temp->next;
+        // }
+        node_product* temp = head;
+        int count = 1;
+        cout << "\n\t\t\t\t\t================ Pre-Pay ================\n"; 
+        cout << "No\tName\t\t\tCategory\t\tID\t\tPrice\t\tQuantity\tDate\n";
+        while (temp != nullptr) {
+            cout << count << "\t"
+                << setw(20) << left << temp->product.nameProduct << "\t"
+                << setw(20) << left << temp->product.catagory_product << "\t"
+                << setw(10) << left << temp->product.idPoduct << "\t"
+                << setw(10) << left << temp->product.priceProduct << "\t"
+                << setw(10) << left << temp->product.quantity_product << "\n";
             temp = temp->next;
+            count++;
         }
     }
     void sell_product_by_ID(int id){

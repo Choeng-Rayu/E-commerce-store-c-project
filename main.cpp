@@ -45,6 +45,8 @@ class Style{
         cout << "-------------------------------\n";
         cout << "-  #10. Cart Management       -\n";
         cout << "-------------------------------\n";
+        cout << "-  #11. Cart Management       -\n";
+        cout << "-------------------------------\n";
 
     }
     void display_menu_seller()
@@ -391,6 +393,11 @@ int main ()
                         system("cls");
                         system("color 0A");
                         cart->save_cart_to_file();
+                    break;
+                    case 11:
+                        system("cls");
+                        system("color 0c");
+                        product->display_products();
                     break;
                     case 10:
                         {
