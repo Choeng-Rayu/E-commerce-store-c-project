@@ -464,13 +464,14 @@ int main ()
                                                 case 7:
                                                     system("cls");
                                                     system("color 7");
-                                                    back_cart_management = false;
+                                                    invoice->save_inovice_to_file();
                                                     cout << " Your are backed to previouse!" << endl;
                                                     break;
                                                 case 8:
                                                     system("cls");
                                                     system("color 4");
                                                     back_invoice = false;
+                                                    cout << " Your are backed to previouse!" << endl;
                                                 break;
                                                 case 0: {
                                                     style.exit_program_style ();

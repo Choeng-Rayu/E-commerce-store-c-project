@@ -229,8 +229,7 @@ class Invoice
             << "5. Get Invoice\n"
             << "6. Display history\n"
             << "7. Save to invoice\n"
-            << "8. Save to invoice\n"
-            << "9. Back to previous\n";
+            << "8. Back to previous\n";
     }
 
 };
