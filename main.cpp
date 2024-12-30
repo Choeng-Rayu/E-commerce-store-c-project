@@ -45,7 +45,7 @@ class Style{
         cout << "-------------------------------\n";
         cout << "-  #10. Cart Management       -\n";
         cout << "-------------------------------\n";
-        cout << "-  #11. Cart Management       -\n";
+        cout << "-  #11. Display product       -\n";
         cout << "-------------------------------\n";
 
     }
@@ -240,7 +240,7 @@ int main ()
             bool back1 = true;
             while(back1)
             {
-                product->display_products();
+                
                 style.display_menu_customer();
                 int opt_customer;
                 cout << "Enter your option: ";
@@ -251,6 +251,7 @@ int main ()
                         system("cls");
                         system("color 0A");
                         {
+                            product->display_products();
                             int id_product, quantity;
                             cout << "Enter ID for add product to cart: " ;
                             cin >> id_product;
