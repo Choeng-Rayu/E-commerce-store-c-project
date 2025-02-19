@@ -20,13 +20,16 @@ using namespace std;
 #define FILE_PERSONAL_SELLER "personal seller.csv" // store all the personal information of the seller
 
 
+
+
+
 class Style{
     public:
     void display_menu_customer()
     {
         cout << "\n                   \t\t***************************************************************\n";
         cout << "                   \t\t************** Welcome to E-Commerce store *********************\n";
-        cout << "                   \t\t***************************************************************\n\n";
+        cout << "                                 \t\t***************************************************************\n\n";
         cout << "Please select option\n\n";
         cout << "-  #0. exit the program       -\n";
         cout << "-------------------------------\n";
