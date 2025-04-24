@@ -654,7 +654,7 @@ class seller_account
 //         root = NULL;
 //     }
 //     ~BST_for_customer(){
-x
+
 //     }
     
 // };
